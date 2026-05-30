@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLiveResults } from '@/hooks/useLiveResults';
 import CategoryTabs from './CategoryTabs';
-import Diagnostics from './Diagnostics';
 import Leaderboard from './Leaderboard';
 import StageNav from './StageNav';
 import StageInfo from './StageInfo';
@@ -135,9 +134,6 @@ export default function LiveDashboard({ onStatusChange }: LiveDashboardProps) {
       ) : (
         <CategoryTabs results={currentStageData} onPilotClick={setSelectedPilot} />
       )}
-
-      {/* Solo mostramos el diagnóstico con los datos Generales para evaluar cobertura total */}
-      <Diagnostics results={data.general} />
 
       {/* Modal de Detalle de Piloto */}
       <PilotDetailModal 

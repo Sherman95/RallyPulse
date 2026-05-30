@@ -74,7 +74,6 @@ export default function Header({ status = 'LIVE', lastUpdated = null }: HeaderPr
           <span className="text-rally-nav-txt text-[13px] sm:text-[15px] font-bold tracking-wide leading-tight">
             Rally<span className="text-rally-accent">Pulse</span>
           </span>
-          <span className="text-white/50 text-[9px] sm:text-[10px] font-medium leading-none tracking-wider">FEDAK 2025</span>
         </div>
 
         <div className="ml-auto flex items-center">

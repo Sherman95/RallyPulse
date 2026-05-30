@@ -25,9 +25,11 @@ export default function PilotDetailModal({ pilot, allData, onClose }: PilotDetai
     };
   }, [pilot]);
 
-  if (!pilot || !allData) return null;
-
   const { generalPosition, categoryPosition } = useMemo(() => {
+    if (!pilot || !allData) {
+      return { generalPosition: null, categoryPosition: null };
+    }
+
     const generalIndex = allData.general.findIndex(r => r.numero === pilot.numero);
     const generalPos = generalIndex >= 0 ? generalIndex + 1 : null;
 
@@ -36,7 +38,9 @@ export default function PilotDetailModal({ pilot, allData, onClose }: PilotDetai
     const categoryPos = categoryIndex >= 0 ? categoryIndex + 1 : null;
 
     return { generalPosition: generalPos, categoryPosition: categoryPos };
-  }, [allData.general, pilot.categoria, pilot.numero]);
+  }, [allData, pilot]);
+
+  if (!pilot || !allData) return null;
 
   // Extraer los tiempos del piloto en cada TC
   const stageTimes: { tcId: string; tiempo: string; posicion: number }[] = [];
@@ -53,10 +57,16 @@ export default function PilotDetailModal({ pilot, allData, onClose }: PilotDetai
     }
   }
 
+  const orderedStageTimes = [...stageTimes].sort((a, b) => {
+    const na = parseInt(a.tcId.replace(/\D/g, ""), 10);
+    const nb = parseInt(b.tcId.replace(/\D/g, ""), 10);
+    return (isNaN(na) ? 0 : na) - (isNaN(nb) ? 0 : nb);
+  });
+
   const buildShareText = () => {
     const origin = typeof window !== 'undefined' ? window.location.origin : '';
     const catPos = categoryPosition ? `Pos. Cat: ${categoryPosition}` : 'Pos. Cat: -';
-    const genPos = generalPosition ? `Pos. Gral: ${generalPosition}` : 'Pos. Gral: -';
+    const genPos = generalPosition ? `Pos. General: ${generalPosition}` : 'Pos. General: -';
     return `Rally Pulse | ${pilot.piloto} (#${pilot.numero}) | ${pilot.categoria} | ${catPos} | ${genPos} | Tiempo: ${pilot.tiempo} ${origin}`.trim();
   };
 
@@ -102,10 +112,17 @@ export default function PilotDetailModal({ pilot, allData, onClose }: PilotDetai
     return currentY + lineHeight;
   };
 
+  const loadImage = (src: string): Promise<HTMLImageElement | null> => new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => resolve(null);
+    img.src = src;
+  });
+
   const createShareImage = async (): Promise<Blob | null> => {
     const canvas = document.createElement('canvas');
     const width = 1080;
-    const height = 1080;
+    const height = 1920;
     canvas.width = width;
     canvas.height = height;
 
@@ -115,39 +132,92 @@ export default function PilotDetailModal({ pilot, allData, onClose }: PilotDetai
     ctx.fillStyle = '#f5f6fa';
     ctx.fillRect(0, 0, width, height);
 
+    const logo = await loadImage('/logoRallyImbabura.webp');
+    if (logo) {
+      const maxLogoW = 320;
+      const maxLogoH = 260;
+      const scale = Math.min(maxLogoW / logo.width, maxLogoH / logo.height, 1);
+      const logoW = Math.round(logo.width * scale);
+      const logoH = Math.round(logo.height * scale);
+      ctx.drawImage(logo, width - logoW - 80, 60, logoW, logoH);
+    }
+
+    const watermark = await loadImage('/logo.webp');
+    if (watermark) {
+      const maxW = 760;
+      const maxH = 760;
+      const scale = Math.min(maxW / watermark.width, maxH / watermark.height, 1);
+      const wmW = Math.round(watermark.width * scale);
+      const wmH = Math.round(watermark.height * scale);
+      ctx.save();
+      ctx.globalAlpha = 0.08;
+      ctx.drawImage(watermark, (width - wmW) / 2, (height - wmH) / 2, wmW, wmH);
+      ctx.restore();
+    }
+
     ctx.fillStyle = '#111827';
-    ctx.font = 'bold 48px sans-serif';
-    ctx.fillText('Rally Pulse', 80, 110);
+    ctx.font = 'bold 56px sans-serif';
+    ctx.fillText('Rally Pulse', 80, 130);
 
     ctx.fillStyle = '#ef4444';
-    ctx.font = 'bold 72px sans-serif';
-    ctx.fillText(`#${pilot.numero}`, 80, 220);
+    ctx.font = 'bold 88px sans-serif';
+    ctx.fillText(`#${pilot.numero}`, 80, 260);
 
     ctx.fillStyle = '#111827';
-    ctx.font = 'bold 52px sans-serif';
-    let y = wrapText(ctx, pilot.piloto, 80, 320, 920, 60);
+    ctx.font = 'bold 60px sans-serif';
+    let y = wrapText(ctx, pilot.piloto, 80, 370, 920, 70);
 
     ctx.fillStyle = '#6b7280';
-    ctx.font = '500 34px sans-serif';
-    y = wrapText(ctx, `Copiloto: ${pilot.copiloto || 'N/A'}`, 80, y + 10, 920, 44);
+    ctx.font = '500 36px sans-serif';
+    y = wrapText(ctx, `Copiloto: ${pilot.copiloto || 'N/A'}`, 80, y + 10, 920, 48);
+
+    ctx.fillStyle = '#6b7280';
+    ctx.font = '500 36px sans-serif';
+    y = wrapText(ctx, `Vehiculo: ${pilot.vehiculo || 'N/A'}`, 80, y + 8, 920, 48);
 
     ctx.fillStyle = '#111827';
-    ctx.font = '600 36px sans-serif';
-    ctx.fillText(`Categoria: ${pilot.categoria}`, 80, y + 60);
+    ctx.font = '600 40px sans-serif';
+    ctx.fillText(`Categoria: ${pilot.categoria}`, 80, y + 70);
 
     ctx.fillStyle = '#111827';
-    ctx.font = '600 36px sans-serif';
-    ctx.fillText(`Pos. Cat: ${categoryPosition ?? '-'}`, 80, y + 120);
-    ctx.fillText(`Pos. Gral: ${generalPosition ?? '-'}`, 480, y + 120);
+    ctx.font = '600 40px sans-serif';
+    ctx.fillText(`Pos. Cat: ${categoryPosition ?? '-'}`, 80, y + 140);
+    ctx.fillText(`Pos. General: ${generalPosition ?? '-'}`, 520, y + 140);
 
     ctx.fillStyle = '#ef4444';
-    ctx.font = '700 44px sans-serif';
-    ctx.fillText(`Tiempo: ${pilot.tiempo}`, 80, y + 200);
+    ctx.font = '700 50px sans-serif';
+    ctx.fillText(`Tiempo: ${pilot.tiempo}`, 80, y + 220);
+
+    // Tramos (para historia)
+    const stageStartY = y + 320;
+    ctx.fillStyle = '#111827';
+    ctx.font = '700 36px sans-serif';
+    ctx.fillText('Tramos', 80, stageStartY);
+
+    ctx.font = '600 32px sans-serif';
+    ctx.fillStyle = '#374151';
+    const maxStagesForImage = 6;
+    const stageTimesForImage = orderedStageTimes.slice(0, maxStagesForImage);
+
+    if (stageTimesForImage.length === 0) {
+      ctx.fillText('Sin tiempos por tramo', 80, stageStartY + 60);
+    } else {
+      let lineY = stageStartY + 60;
+      for (const st of stageTimesForImage) {
+        ctx.fillText(`${st.tcId} · Pos ${st.posicion}`, 80, lineY);
+        ctx.fillText(st.tiempo, 760, lineY);
+        lineY += 48;
+      }
+    }
 
     const origin = typeof window !== 'undefined' ? window.location.origin : '';
     ctx.fillStyle = '#6b7280';
     ctx.font = '500 30px sans-serif';
-    ctx.fillText(origin || 'rally-pulse.vercel.app', 80, height - 80);
+    ctx.fillText(origin || 'rally-pulse.vercel.app', 80, height - 130);
+
+    ctx.font = '600 30px sans-serif';
+    ctx.fillStyle = '#6b7280';
+    ctx.fillText('Ronald Azuero · Sherman95', 80, height - 85);
 
     return new Promise(resolve => {
       canvas.toBlob(blob => resolve(blob), 'image/png');
@@ -218,7 +288,7 @@ export default function PilotDetailModal({ pilot, allData, onClose }: PilotDetai
               Pos. Cat: {categoryPosition ?? "-"}
             </span>
             <span className="text-[10px] font-bold text-rally-muted uppercase tracking-widest px-2.5 py-1">
-              Pos. Gral: {generalPosition ?? "-"}
+              Pos. General: {generalPosition ?? "-"}
             </span>
           </div>
 
@@ -266,7 +336,7 @@ export default function PilotDetailModal({ pilot, allData, onClose }: PilotDetai
             </div>
           ) : (
             <div className="space-y-3">
-              {stageTimes.map(st => (
+              {orderedStageTimes.map(st => (
                 <div key={st.tcId} className="flex items-center justify-between bg-rally-surface border border-rally-surface rounded-xl p-4 shadow-sm hover:border-rally-accent transition-colors">
                   <div className="flex items-center gap-4">
                     <div className="w-10 h-10 rounded-lg bg-rally-bg border border-rally-surface flex flex-col items-center justify-center">
