@@ -99,7 +99,7 @@ export default function LiveDashboard({ onStatusChange }: LiveDashboardProps) {
           placeholder={`Buscar en ${currentStageId}...`}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="block w-full pl-10 pr-3 py-2.5 sm:py-3 border border-rally-surface rounded-xl leading-5 bg-rally-surface placeholder-rally-muted text-rally-txt focus:outline-none focus:ring-2 focus:ring-rally-accent focus:border-rally-accent sm:text-sm shadow-sm transition-all"
+          className="block w-full pl-10 pr-3 py-2 sm:py-3 border border-rally-surface rounded-xl leading-5 bg-rally-surface placeholder-rally-muted text-rally-txt focus:outline-none focus:ring-2 focus:ring-rally-accent focus:border-rally-accent text-sm shadow-sm transition-all"
         />
         {isSearching && (
           <button 

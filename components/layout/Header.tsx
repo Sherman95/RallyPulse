@@ -58,53 +58,59 @@ export default function Header({ status = 'LIVE', lastUpdated = null }: HeaderPr
 
   return (
     <header className="sticky top-0 z-50 bg-rally-nav border-b border-white/[0.08]">
-      <div className="flex items-center gap-2 h-14 px-4 max-w-5xl mx-auto">
-        {/* Logo Imbabura */}
-        <div className="flex items-center justify-center bg-white rounded-md overflow-hidden shadow-sm">
-          <Image 
-            src="/logoRallyImbabura.webp" 
-            alt="Rally Imbabura" 
-            width={44} 
-            height={44} 
-            className="object-contain" 
-          />
-        </div>
+      <div className="flex items-center gap-2 px-3 sm:px-4 max-w-5xl mx-auto py-2 sm:py-3">
+        {/* Logo Imbabura — sin fondo, tamaño completo */}
+        <Image 
+          src="/logoRallyImbabura.webp" 
+          alt="Rally Imbabura" 
+          width={220} 
+          height={80} 
+          sizes="(min-width: 768px) 220px, (min-width: 640px) 200px, 170px"
+          className="shrink-0 w-[170px] h-12 sm:w-[200px] sm:h-14 md:w-[220px] md:h-16 object-contain" 
+        />
 
         {/* Nombre — texto invertido siempre claro */}
-        <div className="flex flex-col justify-center ml-1">
-          <span className="text-rally-nav-txt text-[15px] font-bold tracking-wide leading-tight">
+        <div className="min-w-0 flex flex-col justify-center ml-1">
+          <span className="text-rally-nav-txt text-[13px] sm:text-[15px] font-bold tracking-wide leading-tight">
             Rally<span className="text-rally-accent">Pulse</span>
           </span>
-          <span className="text-white/50 text-[10px] font-medium leading-none tracking-wider">FEDAK 2025</span>
+          <span className="text-white/50 text-[9px] sm:text-[10px] font-medium leading-none tracking-wider">FEDAK 2025</span>
         </div>
 
-        {/* Chip EN VIVO */}
-        <span className={`ml-auto text-[10px] font-medium px-2 py-0.5 rounded-sm tracking-wide ${
-          status === 'ACTUALIZANDO' ? 'bg-yellow-500 text-rally-nav' :
-          status === 'ERROR TEMPORAL' ? 'bg-orange-500 text-rally-nav' :
-          'bg-rally-accent text-rally-nav'
-        }`}>
-          {visuals.label}
-        </span>
-
-        {/* Pulso animado (solo si no hay error) */}
-        {status !== 'ERROR TEMPORAL' && (
-          <span className="relative flex h-2 w-2 ml-1.5">
-            <span className={`absolute inline-flex h-full w-full rounded-full opacity-60 ${
-              status === 'ACTUALIZANDO' ? 'animate-spin bg-yellow-400' : 'animate-ping bg-rally-accent'
-            }`} />
-            <span className={`relative inline-flex h-2 w-2 rounded-full ${
-              status === 'ACTUALIZANDO' ? 'bg-yellow-500' : 'bg-rally-accent'
-            }`} />
+        <div className="ml-auto flex items-center">
+          {/* Chip EN VIVO */}
+          <span className={`text-[9px] sm:text-[10px] font-medium px-1.5 sm:px-2 py-0.5 rounded-sm tracking-wide ${
+            status === 'ACTUALIZANDO' ? 'bg-yellow-500 text-rally-nav' :
+            status === 'ERROR TEMPORAL' ? 'bg-orange-500 text-rally-nav' :
+            'bg-rally-accent text-rally-nav'
+          }`}>
+            {status === 'ACTUALIZANDO' ? (
+              <span className="inline-flex items-center gap-1" aria-label="Actualizando">
+                <span className="inline-block w-1 h-1 rounded-full bg-rally-nav animate-bounce [animation-delay:-0.2s]" />
+                <span className="inline-block w-1 h-1 rounded-full bg-rally-nav animate-bounce [animation-delay:-0.1s]" />
+                <span className="inline-block w-1 h-1 rounded-full bg-rally-nav animate-bounce" />
+              </span>
+            ) : (
+              visuals.label
+            )}
           </span>
-        )}
 
-        {/* Toggle tema */}
-        <button
-          onClick={toggle}
-          aria-label="Cambiar tema"
-          className="ml-2 w-7 h-7 flex items-center justify-center rounded border border-white/20 text-white/60 hover:text-white hover:border-white/40 transition-colors"
-        >
+          {/* Pulso animado (solo en LIVE) */}
+          {status === 'LIVE' && (
+            <span className="relative flex h-2 w-2 ml-1.5">
+              <span className="absolute inline-flex h-full w-full rounded-full opacity-60 animate-ping bg-rally-accent" />
+              <span className={`relative inline-flex h-2 w-2 rounded-full ${
+                'bg-rally-accent'
+              }`} />
+            </span>
+          )}
+
+          {/* Toggle tema */}
+          <button
+            onClick={toggle}
+            aria-label="Cambiar tema"
+            className="ml-2 w-7 h-7 flex items-center justify-center rounded border border-white/20 text-white/60 hover:text-white hover:border-white/40 transition-colors"
+          >
           {dark ? (
             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -114,7 +120,8 @@ export default function Header({ status = 'LIVE', lastUpdated = null }: HeaderPr
               <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
             </svg>
           )}
-        </button>
+          </button>
+        </div>
       </div>
     </header>
   );

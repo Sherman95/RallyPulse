@@ -60,7 +60,7 @@ export default function CategoryTabs({ results, onPilotClick }: CategoryTabsProp
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`whitespace-nowrap px-4 py-2 text-sm font-semibold rounded-lg transition-colors border flex items-center justify-center min-w-[80px] ${
+                className={`whitespace-nowrap px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold rounded-lg transition-colors border flex items-center justify-center min-w-[72px] sm:min-w-[80px] ${
                   isSelected 
                     ? 'bg-rally-accent text-white border-rally-accent' 
                     : 'bg-rally-surface2 text-rally-txt border-rally-border hover:bg-rally-surface'

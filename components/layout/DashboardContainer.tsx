@@ -6,7 +6,7 @@ interface DashboardContainerProps {
 
 export default function DashboardContainer({ children }: DashboardContainerProps) {
   return (
-    <main className="flex-1 w-full flex flex-col bg-zinc-950">
+    <main className="flex-1 w-full flex flex-col bg-rally-bg">
       {/* 
         Contenedor centralizado para maximizar legibilidad en pantallas grandes 
         y aprovechar todo el espacio en pantallas móviles.

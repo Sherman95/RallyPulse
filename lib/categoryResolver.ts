@@ -62,8 +62,9 @@ export interface ResolvedDriverInfo {
  *
  * @param numero El número del vehículo
  * @param rawEquipo El nombre bruto del equipo proveniente del CSV (usado solo como fallback de piloto/copiloto)
+ * @param rawVehiculo El vehículo bruto proveniente del CSV (fallback cuando no hay registro local)
  */
-export function resolveDriverMetadata(numero: number, rawEquipo: string): ResolvedDriverInfo {
+export function resolveDriverMetadata(numero: number, rawEquipo: string, rawVehiculo?: string): ResolvedDriverInfo {
   // 1. Autoridad máxima: El archivo local
   const registeredMetadata = driversMap.get(numero);
   
@@ -100,7 +101,7 @@ export function resolveDriverMetadata(numero: number, rawEquipo: string): Resolv
   return {
     piloto: fallbackPiloto,
     copiloto: fallbackCopiloto,
-    vehiculo: "Desconocido",
+    vehiculo: rawVehiculo && rawVehiculo.trim().length > 0 ? rawVehiculo.trim() : "Desconocido",
     categoria: inferredCategory,
     categorySource: inferredCategory === "SIN CLASIFICAR" ? "unknown" : "inferred"
   };

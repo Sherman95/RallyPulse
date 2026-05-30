@@ -44,7 +44,7 @@ export default function Leaderboard({ results, hideHeader = false, onPilotClick 
                     : 'bg-rally-surface2 hover:bg-rally-surface'
                 }`}
               >
-                <td className={`py-3 px-2 text-center text-sm font-bold w-8 ${
+                <td className={`py-2 sm:py-3 px-2 text-center text-xs sm:text-sm font-bold w-8 ${
                   position === 1 ? 'text-rally-gold' :
                   position === 2 ? 'text-rally-silver' :
                   position === 3 ? 'text-rally-bronze' :
@@ -52,19 +52,22 @@ export default function Leaderboard({ results, hideHeader = false, onPilotClick 
                 }`}>
                   {position}
                 </td>
-                <td className="py-3 px-2 text-[11px] text-rally-muted font-mono">
+                <td className="py-2 sm:py-3 px-2 text-[10px] sm:text-[11px] text-rally-muted font-mono">
                   #{result.numero}
                 </td>
-                <td className="py-3 px-2">
+                <td className="py-2 sm:py-3 px-2">
                   <div className="flex flex-col items-start gap-0.5">
-                    <span className="text-sm font-bold text-rally-txt leading-tight">{result.piloto}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs sm:text-sm font-bold text-rally-txt leading-tight">{result.piloto}</span>
+                      <span className="text-[10px] sm:text-xs text-rally-muted">/ {result.copiloto}</span>
+                    </div>
                     <CategoryBadge cat={result.categoria} />
                   </div>
                 </td>
-                <td className="py-3 px-2 text-right text-sm text-rally-txt font-mono tabular-nums whitespace-nowrap">
+                <td className="py-2 sm:py-3 px-2 text-right text-xs sm:text-sm text-rally-txt font-mono tabular-nums whitespace-nowrap">
                   {result.tiempo}
                 </td>
-                <td className={`py-3 px-2 text-right text-xs font-mono font-bold tabular-nums whitespace-nowrap ${
+                <td className={`py-2 sm:py-3 px-2 text-right text-[10px] sm:text-xs font-mono font-bold tabular-nums whitespace-nowrap ${
                   position === 1 ? 'text-rally-hint' : 'text-rally-gap'
                 }`}>
                   {position === 1 ? '—' : result.diferencia}

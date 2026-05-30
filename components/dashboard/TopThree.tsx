@@ -47,45 +47,48 @@ export default function TopThree({ topDrivers, onPilotClick }: TopThreeProps) {
     return (
       <div
         onClick={() => onPilotClick && onPilotClick(driver)}
-        className={`relative rounded-lg overflow-hidden flex flex-col items-center gap-1 p-3 w-full sm:w-1/3 transition-all duration-300 ${m.cardBg} ${m.border} ${position === 1 ? 'border-2 sm:scale-105 sm:-translate-y-4 shadow-sm' : 'border'} ${orderClass} ${onPilotClick ? 'cursor-pointer hover:opacity-90' : ''}`}
+        className={`relative min-w-0 rounded-lg overflow-hidden flex flex-col items-center gap-0.5 p-2 sm:gap-1 sm:p-3 flex-1 basis-0 transition-all duration-300 ${m.cardBg} ${m.border} ${position === 1 ? 'z-10 border-2 flex-[1.28] scale-[1.07] -translate-y-2 shadow-md ring-1 ring-rally-gold/25 sm:scale-105 sm:-translate-y-4 sm:shadow-sm sm:ring-0' : 'border opacity-95'} ${orderClass} ${onPilotClick ? 'cursor-pointer hover:opacity-90' : ''}`}
       >
         {/* franja superior de color */}
         <div className={`absolute top-0 inset-x-0 h-1 ${m.strip}`} />
 
-        <span className={`text-3xl font-medium leading-none mt-2 ${m.numCol}`}>
+        <span className={`text-2xl sm:text-3xl font-medium leading-none mt-1.5 sm:mt-2 ${m.numCol}`}>
           {position}
         </span>
-        <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-sm bg-rally-txt/5 text-rally-muted">
+        <span className="text-[9px] sm:text-[10px] font-medium px-1.5 py-0.5 rounded-sm bg-rally-txt/5 text-rally-muted">
           {driver.numero}
         </span>
-        <p className="text-xs font-medium text-rally-txt text-center uppercase tracking-wide leading-tight mt-1">
+        <p className="w-full px-1 text-[10px] sm:text-xs font-medium text-rally-txt text-center uppercase tracking-wide leading-tight mt-1 overflow-hidden text-ellipsis whitespace-nowrap sm:whitespace-normal sm:overflow-visible sm:text-clip">
           {driver.piloto}
         </p>
-        <p className="text-[10px] text-rally-muted text-center leading-tight">
+        <p className="w-full px-1 text-[9px] sm:text-[10px] text-rally-muted text-center leading-tight overflow-hidden text-ellipsis whitespace-nowrap sm:whitespace-normal sm:overflow-visible sm:text-clip">
           {driver.copiloto}
         </p>
 
-        <div className="w-4/5 h-px bg-rally-txt/10 my-1.5" />
+        <div className="w-4/5 h-px bg-rally-txt/10 my-1" />
 
-        <span className="text-sm font-medium text-rally-txt tabular-nums font-mono">
+        <span className="text-xs sm:text-sm font-medium text-rally-txt tabular-nums font-mono">
           {driver.tiempo}
         </span>
-        <span className={`text-[10px] font-mono tabular-nums mb-2 ${position === 1 ? 'text-rally-hint' : 'text-rally-gap'}`}>
+        <span className={`text-[9px] sm:text-[10px] font-mono tabular-nums mb-1.5 sm:mb-2 ${position === 1 ? 'text-rally-hint' : 'text-rally-gap'}`}>
           {position === 1 ? 'LÍDER' : driver.diferencia}
         </span>
         
-        <CategoryBadge cat={driver.categoria} />
+        <CategoryBadge
+          cat={driver.categoria}
+          className="max-w-full truncate sm:whitespace-normal sm:overflow-visible sm:text-clip text-[9px] sm:text-xs px-1.5 sm:px-2.5 py-0.5 rounded-md"
+        />
       </div>
     );
   };
 
   return (
-    <section className="mb-12 w-full max-w-5xl mx-auto px-2 sm:px-6">
-      <div className="bg-rally-surface rounded-xl p-4 sm:p-6 lg:p-8 flex flex-col sm:flex-row items-end justify-center gap-4 lg:gap-6 shadow-inner">
+    <section className="mb-8 sm:mb-12 w-full max-w-5xl mx-auto px-2 sm:px-6">
+      <div className="bg-rally-surface rounded-xl p-3 sm:p-6 lg:p-8 flex flex-row items-end justify-center gap-2 sm:gap-4 lg:gap-6 shadow-inner">
         {/* Usamos las clases 'order' para alterar el flujo visual y poner al 1ro en medio */}
-        {renderCard(second, 2, "order-2 sm:order-1")}
-        {renderCard(first, 1, "order-1 sm:order-2")}
-        {renderCard(third, 3, "order-3 sm:order-3")}
+        {renderCard(second, 2, "order-1")}
+        {renderCard(first, 1, "order-2")}
+        {renderCard(third, 3, "order-3")}
       </div>
     </section>
   );

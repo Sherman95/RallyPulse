@@ -69,10 +69,21 @@
 }
 
 /* ============================================
-   Body — fondo controlado por variables
+   OVERRIDE CRÍTICO: Tailwind v4 inyecta
+   @media (prefers-color-scheme: dark) { html { background: black } }
+   Esto lo sobreescribimos con !important para que
+   SIEMPRE use nuestras variables rally-*, no las de Tailwind.
    ============================================ */
+html, body {
+  background-color: hsl(var(--rally-bg)) !important;
+  color: hsl(var(--rally-txt)) !important;
+  color-scheme: light;
+}
+
+.dark, .dark body {
+  color-scheme: dark;
+}
+
 body {
-  background-color: hsl(var(--rally-bg));
-  color: hsl(var(--rally-txt));
   font-family: Arial, Helvetica, sans-serif;
 }

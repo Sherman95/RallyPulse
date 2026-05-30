@@ -32,7 +32,7 @@ export interface EnrichedProcessedResults {
  */
 export function mergeWithDrivers(liveResults: RallyResult[]): EnrichedRallyResult[] {
   return liveResults.map(result => {
-    const resolvedInfo = resolveDriverMetadata(result.numero, result.equipo);
+    const resolvedInfo = resolveDriverMetadata(result.numero, result.equipo, result.vehiculo);
     return {
       posicion: result.posicion,
       numero: result.numero,
