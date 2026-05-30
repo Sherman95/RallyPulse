@@ -6,9 +6,11 @@ export interface StageSchedule {
   distanceKm: number;
   firstCarTime: string; // ISO string
   maxTimeMins: number;
+  cancelled?: boolean;
+  cancelReason?: string;
 }
 
-export type StageStatus = 'Próximo' | 'En Curso' | 'Finalizado';
+export type StageStatus = 'Siguiente' | 'Cancelado';
 
 export function getAllStages(): StageSchedule[] {
   return scheduleData.stages as StageSchedule[];
@@ -18,16 +20,11 @@ export function getStageById(id: string): StageSchedule | undefined {
   return getAllStages().find(s => s.id === id);
 }
 
-export function getStageStatus(stage: StageSchedule, currentTimeMs: number = Date.now()): StageStatus {
-  const firstCarMs = new Date(stage.firstCarTime).getTime();
-  const maxTimeMs = stage.maxTimeMins * 60 * 1000;
-  const endTimeMs = firstCarMs + maxTimeMs;
-
-  if (currentTimeMs < firstCarMs) {
-    return 'Próximo';
-  } else if (currentTimeMs > endTimeMs) {
-    return 'Finalizado';
-  } else {
-    return 'En Curso';
+export function getStageStatus(stage: StageSchedule, _currentTimeMs: number = Date.now()): StageStatus {
+  if (stage.cancelled) {
+    return 'Cancelado';
   }
+
+  // Evitamos estados por hora (atrasos reales). Mostramos un único estado.
+  return 'Siguiente';
 }

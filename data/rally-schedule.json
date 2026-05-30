@@ -48,7 +48,9 @@
       "name": "Km.15 - La Armenia",
       "distanceKm": 10.64,
       "firstCarTime": "2026-05-30T14:22:00-05:00",
-      "maxTimeMins": 15
+      "maxTimeMins": 15,
+      "cancelled": true,
+      "cancelReason": "Seguridad"
     },
     {
       "id": "TC8",

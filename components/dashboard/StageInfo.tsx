@@ -27,12 +27,11 @@ export default function StageInfo({ stageId }: StageInfoProps) {
   const status = getStageStatus(stage);
   
   const STATUS_STYLES: Record<string, string> = {
-    'Próximo':    'bg-rally-surface text-rally-muted border border-rally-border',
-    'En Curso':   'bg-rally-accent text-white',
-    'Finalizado': 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300',
+    'Siguiente': 'bg-rally-surface text-rally-muted border border-rally-border',
+    'Cancelado': 'bg-rally-accent text-white',
   };
 
-  const statusStyle = STATUS_STYLES[status] || STATUS_STYLES['Próximo'];
+  const statusStyle = STATUS_STYLES[status] || STATUS_STYLES['Siguiente'];
 
   return (
     <div className="border-b border-rally-border px-3 sm:px-4 py-2 sm:py-3 flex items-center gap-2 sm:gap-3 flex-wrap mb-6 max-w-5xl mx-auto">
@@ -44,7 +43,7 @@ export default function StageInfo({ stageId }: StageInfoProps) {
       <span className="text-[10px] sm:text-xs text-rally-muted">{stage.distanceKm.toFixed(2)} km</span>
 
       <span className={`ml-auto text-[9px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-sm tracking-wide uppercase ${statusStyle}`}>
-        {status}
+        {status === 'Cancelado' ? `CANCELADO${stage.cancelReason ? ` (${stage.cancelReason})` : ''}` : status}
       </span>
     </div>
   );
