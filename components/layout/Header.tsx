@@ -4,6 +4,8 @@ import React from 'react';
 import { LiveStatus } from '@/hooks/useLiveResults';
 import { useTheme } from '@/hooks/useTheme';
 
+import Image from 'next/image';
+
 interface HeaderProps {
   status?: LiveStatus;
   lastUpdated?: Date | null;
@@ -56,15 +58,25 @@ export default function Header({ status = 'LIVE', lastUpdated = null }: HeaderPr
 
   return (
     <header className="sticky top-0 z-50 bg-rally-nav border-b border-white/[0.08]">
-      <div className="flex items-center gap-2 h-11 px-4 max-w-5xl mx-auto">
-        {/* Logo dot — color acento */}
-        <span className="w-2 h-2 rounded-full bg-rally-accent" />
+      <div className="flex items-center gap-2 h-14 px-4 max-w-5xl mx-auto">
+        {/* Logo Imbabura */}
+        <div className="flex items-center justify-center bg-white rounded-md p-0.5 shadow-sm">
+          <Image 
+            src="/logoRallyImbabura.webp" 
+            alt="Rally Imbabura" 
+            width={28} 
+            height={28} 
+            className="object-contain" 
+          />
+        </div>
 
         {/* Nombre — texto invertido siempre claro */}
-        <span className="text-rally-nav-txt text-sm font-medium tracking-wide">
-          Rally<span className="text-rally-accent">Pulse</span>
-        </span>
-        <span className="text-white/40 text-xs ml-0.5">FEDAK 2025</span>
+        <div className="flex flex-col justify-center ml-1">
+          <span className="text-rally-nav-txt text-[15px] font-bold tracking-wide leading-tight">
+            Rally<span className="text-rally-accent">Pulse</span>
+          </span>
+          <span className="text-white/50 text-[10px] font-medium leading-none tracking-wider">FEDAK 2025</span>
+        </div>
 
         {/* Chip EN VIVO */}
         <span className={`ml-auto text-[10px] font-medium px-2 py-0.5 rounded-sm tracking-wide ${

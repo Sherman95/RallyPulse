@@ -48,7 +48,7 @@ export default function RootLayout({
           })()
         `}} />
       </head>
-      <body className="min-h-full flex flex-col bg-rally-bg text-rally-text">
+      <body className="min-h-full flex flex-col bg-slate-50 dark:bg-[#0b101c] text-slate-900 dark:text-slate-100">
         {children}
         <Analytics />
       </body>

@@ -17,7 +17,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex min-h-screen flex-col bg-rally-bg text-rally-text font-sans antialiased selection:bg-rally-accent/20 selection:text-rally-text">
+    <div className="flex min-h-screen flex-col font-sans antialiased selection:bg-rally-accent/20">
       
       {/* El Header reacciona a los cambios de estado de la red enviados por LiveDashboard */}
       <Header status={status} lastUpdated={lastUpdated} />
