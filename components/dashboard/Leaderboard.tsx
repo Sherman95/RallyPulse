@@ -59,9 +59,8 @@ export default function Leaderboard({ results, hideHeader = false, onPilotClick 
                 <span className="text-xs font-medium text-rally-muted">
                   Auto #{result.numero}
                 </span>
-                {/* Ocultamos copiloto en móvil */}
                 {result.copiloto && (
-                  <span className="hidden md:inline text-xs text-rally-muted ml-2">
+                  <span className="text-xs text-rally-muted ml-2 truncate">
                     <span className="opacity-50">/</span> {result.copiloto}
                   </span>
                 )}

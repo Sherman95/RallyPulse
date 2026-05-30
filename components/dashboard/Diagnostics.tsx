@@ -75,7 +75,9 @@ export default function Diagnostics({ results }: DiagnosticsProps) {
             <div key={r.numero} className="flex items-center justify-between p-2 rounded-lg bg-rally-surface border border-rally-border shadow-sm text-sm">
               <div className="flex items-center gap-3 overflow-hidden">
                 <span className="font-mono text-rally-muted font-semibold w-8">#{r.numero}</span>
-                <span className="text-rally-text truncate font-medium">{r.piloto}</span>
+                <span className="text-rally-text truncate font-medium">
+                  {r.piloto} {r.copiloto ? `/ ${r.copiloto}` : ''}
+                </span>
               </div>
               <span className={`text-[10px] px-2 py-0.5 rounded-full border font-bold ${badgeColor}`}>
                 {r.categorySource}

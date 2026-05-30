@@ -53,10 +53,15 @@ export default function TopThree({ topDrivers, onPilotClick }: TopThreeProps) {
           <div className="flex justify-center items-center gap-2 mb-3">
             <CategoryBadge cat={driver.categoria} />
           </div>
-          <h3 className="text-lg sm:text-xl font-black text-rally-text line-clamp-2 leading-tight min-h-[3rem]">
+          <h3 className="text-lg sm:text-xl font-black text-rally-text line-clamp-1 leading-tight">
             {driver.piloto}
           </h3>
-          <p className="mt-1 text-sm font-semibold text-rally-muted">
+          {driver.copiloto && (
+            <p className="text-xs font-bold text-rally-muted line-clamp-1 mt-0.5">
+              / {driver.copiloto}
+            </p>
+          )}
+          <p className="mt-2 text-sm font-semibold text-rally-muted">
             Auto #{driver.numero}
           </p>
         </div>
