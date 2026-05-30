@@ -7,47 +7,47 @@
   --foreground: #111827;
 
   /* MODO CLARO — Paleta "Slate" */
-  --rally-bg: hsl(220 18% 88%);
-  --rally-surface: hsl(220 20% 95%);
-  --rally-surface2: hsl(0 0% 100%);
-  --rally-nav: hsl(225 30% 15%);
-  --rally-nav-txt: hsl(220 18% 88%);
-  --rally-accent: hsl(10 83% 50%);
-  --rally-txt: hsl(225 30% 15%);
-  --rally-muted: hsl(220 10% 40%);
-  --rally-hint: hsl(220 8% 63%);
-  --rally-gold: hsl(42 100% 30%);
-  --rally-silver: hsl(220 10% 36%);
-  --rally-bronze: hsl(22 80% 26%);
-  --rally-gap: hsl(14 72% 40%);
+  --rally-bg: hsl(220, 18%, 88%);
+  --rally-surface: hsl(220, 20%, 95%);
+  --rally-surface2: hsl(0, 0%, 100%);
+  --rally-nav: hsl(225, 30%, 15%);
+  --rally-nav-txt: hsl(220, 18%, 88%);
+  --rally-accent: hsl(10, 83%, 50%);
+  --rally-txt: hsl(225, 30%, 15%);
+  --rally-muted: hsl(220, 10%, 40%);
+  --rally-hint: hsl(220, 8%, 63%);
+  --rally-gold: hsl(42, 100%, 30%);
+  --rally-silver: hsl(220, 10%, 36%);
+  --rally-bronze: hsl(22, 80%, 26%);
+  --rally-gap: hsl(14, 72%, 40%);
   
   /* Fallback legacy por si algún componente no se migró aún */
-  --rally-border: hsl(220 20% 95%);
-  --rally-text: hsl(225 30% 15%);
+  --rally-border: hsl(220, 20%, 95%);
+  --rally-text: hsl(225, 30%, 15%);
 }
 
 .dark {
   --background: #0a0a0a;
   --foreground: #ededed;
 
-  /* MODO OSCURO — Paleta "WRC Dark" */
-  --rally-bg: hsl(0 0% 4%);
-  --rally-surface: hsl(0 0% 8%);
-  --rally-surface2: hsl(0 0% 11%);
-  --rally-nav: hsl(0 0% 4%);
-  --rally-nav-txt: hsl(0 0% 94%);
-  --rally-accent: hsl(48 91% 60%);
-  --rally-txt: hsl(0 0% 94%);
-  --rally-muted: hsl(0 0% 53%);
-  --rally-hint: hsl(0 0% 27%);
-  --rally-gold: hsl(48 91% 60%);
-  --rally-silver: hsl(210 8% 72%);
-  --rally-bronze: hsl(28 65% 52%);
-  --rally-gap: hsl(48 91% 60%);
+  /* MODO OSCURO — Paleta "WRC Dark" (Azul y Naranja) */
+  --rally-bg: hsl(225, 30%, 6%);
+  --rally-surface: hsl(225, 30%, 10%);
+  --rally-surface2: hsl(225, 30%, 14%);
+  --rally-nav: hsl(225, 30%, 8%);
+  --rally-nav-txt: hsl(0, 0%, 94%);
+  --rally-accent: hsl(24, 100%, 55%); /* WRC Naranja */
+  --rally-txt: hsl(0, 0%, 94%);
+  --rally-muted: hsl(220, 10%, 65%);
+  --rally-hint: hsl(220, 10%, 40%);
+  --rally-gold: hsl(42, 100%, 55%);
+  --rally-silver: hsl(210, 8%, 72%);
+  --rally-bronze: hsl(28, 65%, 52%);
+  --rally-gap: hsl(24, 100%, 55%);
   
   /* Fallback legacy */
-  --rally-border: hsl(0 0% 8%);
-  --rally-text: hsl(0 0% 94%);
+  --rally-border: hsl(225, 30%, 14%);
+  --rally-text: hsl(0, 0%, 94%);
 }
 
 @theme {
