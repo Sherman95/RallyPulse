@@ -1,8 +1,31 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f9fafb;
+  --foreground: #111827;
+
+  /* Rally Semantic Tokens - Light Mode */
+  --rally-bg: #f9fafb; /* gray-50 */
+  --rally-surface: #ffffff; /* white */
+  --rally-border: #e5e7eb; /* gray-200 */
+  --rally-accent: #dc2626; /* red-600 */
+  --rally-muted: #6b7280; /* gray-500 */
+  --rally-text: #111827; /* gray-900 */
+}
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+
+  /* Rally Semantic Tokens - Dark Mode */
+  --rally-bg: #030712; /* gray-950 */
+  --rally-surface: #111827; /* gray-900 */
+  --rally-border: #1f2937; /* gray-800 */
+  --rally-accent: #ef4444; /* red-500 */
+  --rally-muted: #9ca3af; /* gray-400 */
+  --rally-text: #f3f4f6; /* gray-100 */
 }
 
 @theme inline {
@@ -10,17 +33,19 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Map to Tailwind v4 theme */
+  --color-rally-bg: var(--rally-bg);
+  --color-rally-surface: var(--rally-surface);
+  --color-rally-border: var(--rally-border);
+  --color-rally-accent: var(--rally-accent);
+  --color-rally-muted: var(--rally-muted);
+  --color-rally-text: var(--rally-text);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--rally-bg);
+  color: var(--rally-text);
   font-family: Arial, Helvetica, sans-serif;
 }
+

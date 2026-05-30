@@ -1,0 +1,30 @@
+[
+  {
+    "numero": 19,
+    "piloto": "MARTIN NAVAS",
+    "copiloto": "DANIEL GALARZA",
+    "vehiculo": "CITROEN C3",
+    "categoria": "RC2E"
+  },
+  {
+    "numero": 48,
+    "piloto": "JUAN GUERRERO MALDONADO",
+    "copiloto": "EDIN RIOS ESPINOZA",
+    "vehiculo": "RENAULT CLIO RALLY 3",
+    "categoria": "RC3"
+  },
+  {
+    "numero": 28,
+    "piloto": "ANDRES GUERRA",
+    "copiloto": "EDUARDO SEMPERTEGUI",
+    "vehiculo": "CITROEN C3",
+    "categoria": "RC2E"
+  },
+  {
+    "numero": 10,
+    "piloto": "BYRON JIMENEZ",
+    "copiloto": "JOSE LEONARDO ROJAS",
+    "vehiculo": "VOLKSWAGEN POLO GTI",
+    "categoria": "RC2E"
+  }
+]
