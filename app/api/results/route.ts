@@ -3,8 +3,10 @@ import { fetchSheetCsv } from "@/lib/fetchSheet";
 import { normalizeResults } from "@/lib/normalize";
 import { mergeAllResults } from "@/lib/mergeDrivers";
 
-// Force Next.js not to cache this API route. We want live data.
-export const dynamic = "force-dynamic";
+// Habilitamos ISR (Incremental Static Regeneration).
+// Esta ruta mantendrá en caché la respuesta en Vercel durante 30 segundos.
+// Las peticiones de los usuarios en ese lapso no llegarán a Google Sheets.
+export const revalidate = 30;
 
 export async function GET() {
   try {

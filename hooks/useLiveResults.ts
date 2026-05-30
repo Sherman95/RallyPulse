@@ -40,10 +40,12 @@ export function useLiveResults() {
     // Primera carga
     fetchResults();
 
-    // Configurar polling cada 10 segundos
+    // Configurar polling cada 15 segundos.
+    // Aunque haya un request cada 15s desde el frontend, el backend solo
+    // irá a Google Sheets cada 30 segundos (gracias al revalidate en la ruta).
     const intervalId = setInterval(() => {
       fetchResults();
-    }, 10000);
+    }, 15000);
 
     return () => clearInterval(intervalId);
   }, [fetchResults]);

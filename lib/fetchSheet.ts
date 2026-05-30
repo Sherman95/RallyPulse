@@ -13,9 +13,10 @@ export async function fetchSheetCsv(url: string): Promise<string> {
       headers: {
         "Accept": "text/csv, text/plain, */*",
       },
-      // cache: "no-store" asegura que siempre obtengamos los resultados en tiempo real 
-      // y no una versión cacheada, crucial para resultados de rally.
-      cache: "no-store",
+      // Usamos revalidate de 30 segundos (ISR) en lugar de "no-store".
+      // Esto protege la API de Google Sheets almacenando la respuesta en la caché
+      // compartida de Vercel (Edge/Serverless) durante 30s sin importar cuántos usuarios la pidan.
+      next: { revalidate: 30 },
     });
 
     if (!response.ok) {
