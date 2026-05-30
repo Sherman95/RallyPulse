@@ -3,32 +3,28 @@
 import { useState, useEffect } from 'react';
 
 export const useTheme = () => {
-  const [dark, setDark] = useState<boolean>(false);
+  const [dark, setDark] = useState<boolean>(false); // Siempre empieza en claro para SSR
 
   useEffect(() => {
     // Solo ejecutado en el cliente al montar
-    const savedTheme = localStorage.getItem("rally-theme");
-    const isDark = savedTheme === "dark" || (!savedTheme && matchMedia("(prefers-color-scheme: dark)").matches);
-    
-    setDark(isDark);
-    if (isDark) {
+    const saved = localStorage.getItem("rally-theme");
+    if (saved === "dark") {
+      setDark(true);
       document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
+    } else if (!saved) {
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      setDark(prefersDark);
+      document.documentElement.classList.toggle("dark", prefersDark);
     }
   }, []);
 
   const toggle = () => {
-    const isDark = !dark;
-    setDark(isDark);
-    
-    if (isDark) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-    
-    localStorage.setItem("rally-theme", isDark ? "dark" : "light");
+    setDark((prevDark) => {
+      const nextDark = !prevDark;
+      document.documentElement.classList.toggle("dark", nextDark);
+      localStorage.setItem("rally-theme", nextDark ? "dark" : "light");
+      return nextDark;
+    });
   };
 
   return { dark, toggle };

@@ -24,10 +24,16 @@ export async function GET() {
 
     // 4. Retornar al cliente
     return NextResponse.json(finalData, { status: 200 });
-  } catch (error) {
-    console.error("Error fetching live results:", error);
+  } catch (error: any) {
+    console.error("[API Results] Fetch error:", error.message || error);
+    
+    // Devolvemos 500. En Vercel ISR, esto causa que Next.js retenga la caché 
+    // antigua (stale-while-revalidate), lo cual es el comportamiento deseado.
     return NextResponse.json(
-      { error: "No se pudieron obtener los resultados" },
+      { 
+        error: "No se pudieron obtener los resultados desde Google Sheets", 
+        details: error.message 
+      },
       { status: 500 }
     );
   }
