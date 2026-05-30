@@ -24,7 +24,11 @@ export default function CategoryTabs({ results, onPilotClick }: CategoryTabsProp
       finalTabs.push("SIN CLASIFICAR");
     }
 
-    return finalTabs;
+    // Filtrar para mostrar solo General y las categorías que tienen corredores
+    return finalTabs.filter(cat => {
+      if (cat === "General") return true;
+      return results.some(r => r.categoria === cat);
+    });
   }, [results]);
 
   // 2. Filtrar y recalcular los resultados según la categoría seleccionada

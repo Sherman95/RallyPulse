@@ -11,6 +11,7 @@ export const CATEGORY_ORDER = [
   "RC5",
   "RC2N",
   "T4",
+  "T4-Turbo",
   "T3",
   "T1",
   "TODO TERRENO",
@@ -27,6 +28,7 @@ const driversMap = new Map<number, DriverMetadata>();
 
 // Fallback por enumeración oficial de FEDAK
 export function inferCategory(numero: number): string {
+  if (numero === 225 || numero === 212) return "T4-Turbo";
   if (numero >= 951 && numero <= 999) return "UTV-R";
   if (numero >= 900 && numero <= 950) return "UTV-T";
   if (numero >= 700 && numero <= 899) return "CAMIONETAS";
