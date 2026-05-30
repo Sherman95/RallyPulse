@@ -55,57 +55,54 @@ export default function Header({ status = 'LIVE', lastUpdated = null }: HeaderPr
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-rally-border bg-rally-surface/90 backdrop-blur-md shadow-sm">
-      <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        
-        <div className="flex items-center gap-4">
-          <h1 className="text-lg sm:text-xl font-bold tracking-tight text-rally-text">
-            RALLY CAMINOS DE IMBABURA
-          </h1>
-          
-          {/* Badge Desktop */}
-          <div className={`hidden sm:flex items-center gap-2 rounded-full px-2.5 py-0.5 text-xs font-semibold tracking-wide ring-1 ring-inset ${visuals.bg} ${visuals.text} ${visuals.ring}`}>
-            <span className="relative flex h-2 w-2">
-              <span className={`${status === 'ACTUALIZANDO' ? 'animate-spin' : 'animate-ping'} absolute inline-flex h-full w-full rounded-full opacity-75 ${visuals.ping}`}></span>
-              <span className={`relative inline-flex rounded-full h-2 w-2 ${visuals.dot}`}></span>
-            </span>
-            {visuals.label}
-          </div>
-        </div>
+    <header className="sticky top-0 z-50 bg-rally-nav border-b border-white/[0.08]">
+      <div className="flex items-center gap-2 h-11 px-4 max-w-5xl mx-auto">
+        {/* Logo dot — color acento */}
+        <span className="w-2 h-2 rounded-full bg-rally-accent" />
 
-        <div className="flex items-center gap-6">
-          <div className="flex flex-col items-end text-xs text-rally-muted">
-            <span className="hidden sm:inline">Última actualización:</span>
-            <span className="font-mono text-rally-text font-medium">{formatTime(lastUpdated)}</span>
-          </div>
-
-          <button
-            onClick={toggle}
-            className="p-2 rounded-full bg-rally-bg border border-rally-border text-rally-muted hover:text-rally-text transition-colors"
-            aria-label="Toggle Dark Mode"
-          >
-            {dark ? (
-              // Sun icon for dark mode
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-              </svg>
-            ) : (
-              // Moon icon for light mode
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-              </svg>
-            )}
-          </button>
-        </div>
-      </div>
-      
-      {/* Banner Móvil */}
-      <div className={`sm:hidden flex items-center justify-center gap-2 border-t border-rally-border py-1.5 text-xs font-semibold tracking-wide ${visuals.text} ${visuals.bg.replace('/10', '/30')}`}>
-        <span className="relative flex h-2 w-2">
-          <span className={`${status === 'ACTUALIZANDO' ? 'animate-spin' : 'animate-ping'} absolute inline-flex h-full w-full rounded-full opacity-75 ${visuals.ping}`}></span>
-          <span className={`relative inline-flex rounded-full h-2 w-2 ${visuals.dot}`}></span>
+        {/* Nombre — texto invertido siempre claro */}
+        <span className="text-rally-nav-txt text-sm font-medium tracking-wide">
+          Rally<span className="text-rally-accent">Pulse</span>
         </span>
-        RESULTADOS {visuals.label}
+        <span className="text-white/40 text-xs ml-0.5">FEDAK 2025</span>
+
+        {/* Chip EN VIVO */}
+        <span className={`ml-auto text-[10px] font-medium px-2 py-0.5 rounded-sm tracking-wide ${
+          status === 'ACTUALIZANDO' ? 'bg-yellow-500 text-rally-nav' :
+          status === 'ERROR TEMPORAL' ? 'bg-orange-500 text-rally-nav' :
+          'bg-rally-accent text-rally-nav'
+        }`}>
+          {visuals.label}
+        </span>
+
+        {/* Pulso animado (solo si no hay error) */}
+        {status !== 'ERROR TEMPORAL' && (
+          <span className="relative flex h-2 w-2 ml-1.5">
+            <span className={`absolute inline-flex h-full w-full rounded-full opacity-60 ${
+              status === 'ACTUALIZANDO' ? 'animate-spin bg-yellow-400' : 'animate-ping bg-rally-accent'
+            }`} />
+            <span className={`relative inline-flex h-2 w-2 rounded-full ${
+              status === 'ACTUALIZANDO' ? 'bg-yellow-500' : 'bg-rally-accent'
+            }`} />
+          </span>
+        )}
+
+        {/* Toggle tema */}
+        <button
+          onClick={toggle}
+          aria-label="Cambiar tema"
+          className="ml-2 w-7 h-7 flex items-center justify-center rounded border border-white/20 text-white/60 hover:text-white hover:border-white/40 transition-colors"
+        >
+          {dark ? (
+            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+          ) : (
+            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+          )}
+        </button>
       </div>
     </header>
   );

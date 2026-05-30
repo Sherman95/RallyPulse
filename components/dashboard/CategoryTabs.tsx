@@ -50,7 +50,7 @@ export default function CategoryTabs({ results, onPilotClick }: CategoryTabsProp
     <div className="w-full flex flex-col">
       
       {/* Navegación de Tabs */}
-      <div className="w-full border-b border-rally-border mb-8 overflow-x-auto flex flex-nowrap [&::-webkit-scrollbar]:hidden lg:[&::-webkit-scrollbar]:block" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+      <div className="w-full border-b border-rally-surface mb-8 overflow-x-auto flex flex-nowrap [&::-webkit-scrollbar]:hidden lg:[&::-webkit-scrollbar]:block" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
         <div className="flex gap-2 sm:gap-6 px-2 sm:px-0">
           {categories.map(cat => {
             const isSelected = selectedCategory === cat;
@@ -62,13 +62,13 @@ export default function CategoryTabs({ results, onPilotClick }: CategoryTabsProp
                 onClick={() => setSelectedCategory(cat)}
                 className={`whitespace-nowrap px-4 py-3 text-sm font-semibold transition-colors border-b-2 flex items-center gap-2 ${
                   isSelected 
-                    ? 'border-rally-accent text-rally-text' 
-                    : 'border-transparent text-rally-muted hover:text-rally-text hover:border-rally-border'
+                    ? 'border-rally-accent text-rally-txt' 
+                    : 'border-transparent text-rally-muted hover:text-rally-txt hover:border-rally-surface'
                 }`}
               >
                 {cat}
                 {/* Badge opcional con la cantidad de participantes en la pestaña */}
-                <span className={`text-[10px] px-1.5 py-0.5 rounded-full border border-transparent ${isSelected ? 'bg-rally-accent/10 text-rally-accent border-rally-accent/20' : 'bg-rally-bg text-rally-muted border-rally-border'}`}>
+                <span className={`text-[10px] px-1.5 py-0.5 rounded-full border border-transparent ${isSelected ? 'bg-rally-accent/10 text-rally-accent border-rally-accent/20' : 'bg-rally-bg text-rally-muted border-rally-surface'}`}>
                   {count}
                 </span>
               </button>
@@ -82,7 +82,7 @@ export default function CategoryTabs({ results, onPilotClick }: CategoryTabsProp
       {filteredResults.length > 0 ? (
         <Leaderboard results={filteredResults} onPilotClick={onPilotClick} />
       ) : (
-        <div className="py-12 text-center text-rally-muted text-sm bg-rally-surface border border-rally-border rounded-xl">
+        <div className="py-12 text-center text-rally-muted text-sm bg-rally-surface border border-rally-surface rounded-xl">
           No hay vehículos registrados en esta categoría.
         </div>
       )}

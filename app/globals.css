@@ -6,26 +6,48 @@
   --background: #f9fafb;
   --foreground: #111827;
 
-  /* Rally Semantic Tokens - Light Mode */
-  --rally-bg: #f9fafb; /* gray-50 */
-  --rally-surface: #ffffff; /* white */
-  --rally-border: #e5e7eb; /* gray-200 */
-  --rally-accent: #dc2626; /* red-600 */
-  --rally-muted: #6b7280; /* gray-500 */
-  --rally-text: #111827; /* gray-900 */
+  /* MODO CLARO — Paleta "Slate" */
+  --rally-bg: hsl(220 18% 88%);
+  --rally-surface: hsl(220 20% 95%);
+  --rally-surface2: hsl(0 0% 100%);
+  --rally-nav: hsl(225 30% 15%);
+  --rally-nav-txt: hsl(220 18% 88%);
+  --rally-accent: hsl(10 83% 50%);
+  --rally-txt: hsl(225 30% 15%);
+  --rally-muted: hsl(220 10% 40%);
+  --rally-hint: hsl(220 8% 63%);
+  --rally-gold: hsl(42 100% 30%);
+  --rally-silver: hsl(220 10% 36%);
+  --rally-bronze: hsl(22 80% 26%);
+  --rally-gap: hsl(14 72% 40%);
+  
+  /* Fallback legacy por si algún componente no se migró aún */
+  --rally-border: hsl(220 20% 95%);
+  --rally-text: hsl(225 30% 15%);
 }
 
 .dark {
   --background: #0a0a0a;
   --foreground: #ededed;
 
-  /* Rally Semantic Tokens - Dark Mode */
-  --rally-bg: #030712; /* gray-950 */
-  --rally-surface: #111827; /* gray-900 */
-  --rally-border: #1f2937; /* gray-800 */
-  --rally-accent: #ef4444; /* red-500 */
-  --rally-muted: #9ca3af; /* gray-400 */
-  --rally-text: #f3f4f6; /* gray-100 */
+  /* MODO OSCURO — Paleta "WRC Dark" */
+  --rally-bg: hsl(0 0% 4%);
+  --rally-surface: hsl(0 0% 8%);
+  --rally-surface2: hsl(0 0% 11%);
+  --rally-nav: hsl(0 0% 4%);
+  --rally-nav-txt: hsl(0 0% 94%);
+  --rally-accent: hsl(48 91% 60%);
+  --rally-txt: hsl(0 0% 94%);
+  --rally-muted: hsl(0 0% 53%);
+  --rally-hint: hsl(0 0% 27%);
+  --rally-gold: hsl(48 91% 60%);
+  --rally-silver: hsl(210 8% 72%);
+  --rally-bronze: hsl(28 65% 52%);
+  --rally-gap: hsl(48 91% 60%);
+  
+  /* Fallback legacy */
+  --rally-border: hsl(0 0% 8%);
+  --rally-text: hsl(0 0% 94%);
 }
 
 @theme inline {
@@ -37,9 +59,19 @@
   /* Map to Tailwind v4 theme */
   --color-rally-bg: var(--rally-bg);
   --color-rally-surface: var(--rally-surface);
-  --color-rally-border: var(--rally-border);
+  --color-rally-surface2: var(--rally-surface2);
+  --color-rally-nav: var(--rally-nav);
+  --color-rally-nav-txt: var(--rally-nav-txt);
   --color-rally-accent: var(--rally-accent);
+  --color-rally-txt: var(--rally-txt);
   --color-rally-muted: var(--rally-muted);
+  --color-rally-hint: var(--rally-hint);
+  --color-rally-gold: var(--rally-gold);
+  --color-rally-silver: var(--rally-silver);
+  --color-rally-bronze: var(--rally-bronze);
+  --color-rally-gap: var(--rally-gap);
+  
+  --color-rally-border: var(--rally-border);
   --color-rally-text: var(--rally-text);
 }
 

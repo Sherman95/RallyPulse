@@ -15,77 +15,77 @@ export default function TopThree({ topDrivers, onPilotClick }: TopThreeProps) {
   const second = topDrivers[1];
   const third = topDrivers[2];
 
-  /**
-   * Helper para renderizar cada posición con su identidad visual
-   */
+  const MEDAL: Record<number, any> = {
+    1: {
+      border:  'border-rally-gold',
+      strip:   'bg-rally-gold',
+      numCol:  'text-rally-gold',
+      cardBg:  'bg-amber-50 dark:bg-amber-900/10',
+    },
+    2: {
+      border:  'border-rally-silver/50',
+      strip:   'bg-rally-silver',
+      numCol:  'text-rally-silver',
+      cardBg:  'bg-slate-100 dark:bg-slate-800/20',
+    },
+    3: {
+      border:  'border-rally-bronze/50',
+      strip:   'bg-rally-bronze',
+      numCol:  'text-rally-bronze',
+      cardBg:  'bg-orange-50 dark:bg-orange-900/10',
+    },
+  };
+
   const renderCard = (
     driver: EnrichedRallyResult | undefined,
-    rank: number,
-    orderClass: string,
-    visualRank: 'gold' | 'silver' | 'bronze'
+    position: number,
+    orderClass: string
   ) => {
     if (!driver) return null;
-
-    // Diseño Flat para legibilidad extrema bajo el sol (sin degradados)
-    const rankStyles = {
-      gold: "border-[3px] border-amber-400 dark:border-amber-500 shadow-xl shadow-amber-400/20 sm:scale-105 sm:-translate-y-4",
-      silver: "border-2 border-gray-300 dark:border-gray-500",
-      bronze: "border-2 border-orange-400 dark:border-orange-600"
-    };
-
-    const textStyles = {
-      gold: "text-amber-400 dark:text-amber-500",
-      silver: "text-gray-400 dark:text-gray-400",
-      bronze: "text-orange-500 dark:text-orange-500"
-    };
+    const m = MEDAL[position];
 
     return (
       <div
         onClick={() => onPilotClick && onPilotClick(driver)}
-        className={`flex w-full sm:w-1/3 flex-col items-center rounded-xl bg-rally-surface p-4 sm:p-6 transition-all duration-300 ${rankStyles[visualRank]} ${orderClass} ${onPilotClick ? 'cursor-pointer hover:bg-rally-bg' : ''}`}
+        className={`relative rounded-lg overflow-hidden flex flex-col items-center gap-1 p-3 w-full sm:w-1/3 transition-all duration-300 ${m.cardBg} ${m.border} ${position === 1 ? 'border-2 sm:scale-105 sm:-translate-y-4 shadow-sm' : 'border'} ${orderClass} ${onPilotClick ? 'cursor-pointer hover:opacity-90' : ''}`}
       >
-        {/* Medalla de Posición (Flat Design) */}
-        <div className={`text-5xl sm:text-6xl font-black mb-2 sm:mb-4 ${textStyles[visualRank]} tracking-tighter drop-shadow-sm`}>
-          {rank}
-        </div>
+        {/* franja superior de color */}
+        <div className={`absolute top-0 inset-x-0 h-1 ${m.strip}`} />
+
+        <span className={`text-3xl font-medium leading-none mt-2 ${m.numCol}`}>
+          {position}
+        </span>
+        <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-sm bg-black/5 dark:bg-white/10 text-rally-muted">
+          {driver.numero}
+        </span>
+        <p className="text-xs font-medium text-rally-txt text-center uppercase tracking-wide leading-tight mt-1">
+          {driver.piloto}
+        </p>
+        <p className="text-[10px] text-rally-muted text-center leading-tight">
+          {driver.copiloto}
+        </p>
+
+        <div className="w-4/5 h-px bg-rally-txt/10 my-1.5" />
+
+        <span className="text-sm font-medium text-rally-txt tabular-nums font-mono">
+          {driver.tiempo}
+        </span>
+        <span className={`text-[10px] font-mono tabular-nums mb-2 ${position === 1 ? 'text-rally-hint' : 'text-rally-gap'}`}>
+          {position === 1 ? 'LÍDER' : driver.diferenciaPrimero}
+        </span>
         
-        <div className="text-center w-full">
-          <div className="flex justify-center items-center gap-2 mb-3">
-            <CategoryBadge cat={driver.categoria} />
-          </div>
-          <h3 className="text-lg sm:text-xl font-black text-rally-text line-clamp-1 leading-tight">
-            {driver.piloto}
-          </h3>
-          {driver.copiloto && (
-            <p className="text-xs font-bold text-rally-muted line-clamp-1 mt-0.5">
-              / {driver.copiloto}
-            </p>
-          )}
-          <p className="mt-2 text-sm font-semibold text-rally-muted">
-            Auto #{driver.numero}
-          </p>
-        </div>
-        
-        <div className="mt-4 sm:mt-6 rounded-2xl bg-rally-bg border border-rally-border px-3 py-2 sm:px-4 sm:py-3 w-full text-center">
-          <span className="text-lg sm:text-xl font-mono font-bold text-rally-text tabular-nums tracking-tight">
-            {driver.tiempo}
-          </span>
-        </div>
+        <CategoryBadge cat={driver.categoria} />
       </div>
     );
   };
 
   return (
-    <section className="mb-12 w-full">
-      <h2 className="text-center text-sm font-bold text-rally-muted uppercase tracking-widest mb-8">
-        Líderes de la Clasificación
-      </h2>
-      
-      <div className="flex flex-col sm:flex-row items-end justify-center gap-4 sm:gap-4 lg:gap-8 px-2 sm:px-0">
+    <section className="mb-12 w-full max-w-5xl mx-auto">
+      <div className="flex flex-col sm:flex-row items-end justify-center gap-4 lg:gap-6 px-4 sm:px-6">
         {/* Usamos las clases 'order' para alterar el flujo visual y poner al 1ro en medio */}
-        {renderCard(second, 2, "order-2 sm:order-1", "silver")}
-        {renderCard(first, 1, "order-1 sm:order-2", "gold")}
-        {renderCard(third, 3, "order-3 sm:order-3", "bronze")}
+        {renderCard(second, 2, "order-2 sm:order-1")}
+        {renderCard(first, 1, "order-1 sm:order-2")}
+        {renderCard(third, 3, "order-3 sm:order-3")}
       </div>
     </section>
   );

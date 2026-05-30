@@ -36,13 +36,13 @@ export default function LiveDashboard({ onStatusChange }: LiveDashboardProps) {
 
   if (!data || (!data.general && Object.keys(data.stages).length === 0)) {
     return (
-      <div className="flex flex-1 flex-col items-center justify-center rounded-xl border border-dashed border-rally-border bg-rally-surface p-8 sm:py-24 text-center shadow-sm">
-        <div className="rounded-full bg-rally-bg p-4 ring-1 ring-inset ring-rally-border mb-6">
+      <div className="flex flex-1 flex-col items-center justify-center rounded-xl border border-dashed border-rally-surface bg-rally-surface p-8 sm:py-24 text-center shadow-sm">
+        <div className="rounded-full bg-rally-bg p-4 ring-1 ring-inset ring-rally-surface mb-6">
           <svg className="w-8 h-8 text-rally-muted" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
           </svg>
         </div>
-        <h2 className="text-xl font-medium tracking-tight text-rally-text">Sin Resultados</h2>
+        <h2 className="text-xl font-medium tracking-tight text-rally-txt">Sin Resultados</h2>
         <p className="mt-3 text-sm text-rally-muted max-w-md">No pudimos obtener información válida del Rally. Asegúrate de que el documento tenga información válida.</p>
       </div>
     );
@@ -99,12 +99,12 @@ export default function LiveDashboard({ onStatusChange }: LiveDashboardProps) {
           placeholder={`Buscar en ${currentStageId}...`}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="block w-full pl-10 pr-3 py-2.5 sm:py-3 border border-rally-border rounded-xl leading-5 bg-rally-surface placeholder-rally-muted text-rally-text focus:outline-none focus:ring-2 focus:ring-rally-accent focus:border-rally-accent sm:text-sm shadow-sm transition-all"
+          className="block w-full pl-10 pr-3 py-2.5 sm:py-3 border border-rally-surface rounded-xl leading-5 bg-rally-surface placeholder-rally-muted text-rally-txt focus:outline-none focus:ring-2 focus:ring-rally-accent focus:border-rally-accent sm:text-sm shadow-sm transition-all"
         />
         {isSearching && (
           <button 
             onClick={() => setSearchQuery("")}
-            className="absolute inset-y-0 right-0 pr-3 flex items-center text-rally-muted hover:text-rally-text"
+            className="absolute inset-y-0 right-0 pr-3 flex items-center text-rally-muted hover:text-rally-txt"
           >
             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -114,10 +114,10 @@ export default function LiveDashboard({ onStatusChange }: LiveDashboardProps) {
       </div>
 
       {isSearching ? (
-        <div className="flex flex-col bg-rally-surface rounded-xl shadow-sm border border-rally-border p-3 sm:p-6 min-h-[50vh]">
-          <h2 className="text-lg font-bold text-rally-text mb-6 flex items-center gap-2">
+        <div className="flex flex-col bg-rally-surface rounded-xl shadow-sm border border-rally-surface p-3 sm:p-6 min-h-[50vh]">
+          <h2 className="text-lg font-bold text-rally-txt mb-6 flex items-center gap-2">
             Resultados de búsqueda
-            <span className="bg-rally-bg text-rally-muted px-2 py-0.5 rounded-full text-xs font-semibold border border-rally-border">
+            <span className="bg-rally-bg text-rally-muted px-2 py-0.5 rounded-full text-xs font-semibold border border-rally-surface">
               {searchResults.length}
             </span>
           </h2>

@@ -49,12 +49,12 @@ export default function PilotDetailModal({ pilot, allData, onClose }: PilotDetai
       />
       
       {/* Contenedor del Modal */}
-      <div className="relative w-full max-w-lg bg-rally-surface rounded-2xl shadow-2xl flex flex-col max-h-[90vh] overflow-hidden animate-in zoom-in-95 duration-200 border border-rally-border">
+      <div className="relative w-full max-w-lg bg-rally-surface rounded-2xl shadow-2xl flex flex-col max-h-[90vh] overflow-hidden animate-in zoom-in-95 duration-200 border border-rally-surface">
         
         {/* Botón Cerrar (Flotante) */}
         <button 
           onClick={onClose}
-          className="absolute top-4 right-4 h-8 w-8 flex items-center justify-center rounded-full bg-rally-bg border border-rally-border text-rally-muted hover:text-rally-text transition-colors z-10"
+          className="absolute top-4 right-4 h-8 w-8 flex items-center justify-center rounded-full bg-rally-bg border border-rally-surface text-rally-muted hover:text-rally-txt transition-colors z-10"
         >
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -62,7 +62,7 @@ export default function PilotDetailModal({ pilot, allData, onClose }: PilotDetai
         </button>
 
         {/* Header del Piloto */}
-        <div className="bg-rally-bg px-6 pt-8 pb-6 border-b border-rally-border flex flex-col items-center text-center relative">
+        <div className="bg-rally-bg px-6 pt-8 pb-6 border-b border-rally-surface flex flex-col items-center text-center relative">
           <div className="flex h-16 w-16 items-center justify-center rounded-2xl font-black text-2xl mb-4 bg-rally-accent text-white shadow-lg shadow-rally-accent/20">
             #{pilot.numero}
           </div>
@@ -74,7 +74,7 @@ export default function PilotDetailModal({ pilot, allData, onClose }: PilotDetai
             </span>
           </div>
 
-          <h3 className="text-xl font-bold text-rally-text leading-tight">
+          <h3 className="text-xl font-bold text-rally-txt leading-tight">
             {pilot.piloto}
           </h3>
           <p className="text-sm font-medium text-rally-muted mt-1">
@@ -92,28 +92,28 @@ export default function PilotDetailModal({ pilot, allData, onClose }: PilotDetai
           </h4>
           
           {stageTimes.length === 0 ? (
-            <div className="text-center py-8 text-sm text-rally-muted bg-rally-bg rounded-xl border border-rally-border">
+            <div className="text-center py-8 text-sm text-rally-muted bg-rally-bg rounded-xl border border-rally-surface">
               Este vehículo aún no registra tiempos en ningún tramo.
             </div>
           ) : (
             <div className="space-y-3">
               {stageTimes.map(st => (
-                <div key={st.tcId} className="flex items-center justify-between bg-rally-surface border border-rally-border rounded-xl p-4 shadow-sm hover:border-rally-accent transition-colors">
+                <div key={st.tcId} className="flex items-center justify-between bg-rally-surface border border-rally-surface rounded-xl p-4 shadow-sm hover:border-rally-accent transition-colors">
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-lg bg-rally-bg border border-rally-border flex flex-col items-center justify-center">
+                    <div className="w-10 h-10 rounded-lg bg-rally-bg border border-rally-surface flex flex-col items-center justify-center">
                       <span className="text-[10px] font-bold text-rally-muted leading-none mb-0.5">POS</span>
-                      <span className="text-sm font-black text-rally-text leading-none tabular-nums">{st.posicion}</span>
+                      <span className="text-sm font-black text-rally-txt leading-none tabular-nums">{st.posicion}</span>
                     </div>
-                    <span className="font-bold text-rally-text">{st.tcId}</span>
+                    <span className="font-bold text-rally-txt">{st.tcId}</span>
                   </div>
-                  <span className="font-mono text-lg font-bold text-rally-text tabular-nums">
+                  <span className="font-mono text-lg font-bold text-rally-txt tabular-nums">
                     {st.tiempo}
                   </span>
                 </div>
               ))}
               
-              <div className="flex items-center justify-between bg-rally-bg border border-rally-border rounded-xl p-4 shadow-sm mt-6">
-                <span className="font-bold text-rally-text">Tiempo General Total</span>
+              <div className="flex items-center justify-between bg-rally-bg border border-rally-surface rounded-xl p-4 shadow-sm mt-6">
+                <span className="font-bold text-rally-txt">Tiempo General Total</span>
                 <span className="font-mono text-lg font-bold text-rally-accent tabular-nums">
                   {pilot.tiempo}
                 </span>

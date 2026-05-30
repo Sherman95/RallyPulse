@@ -4,12 +4,12 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-full border-t border-rally-border bg-rally-surface mt-auto">
+    <footer className="w-full border-t border-rally-surface bg-rally-surface mt-auto">
       <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
           
           <div className="flex flex-col items-center sm:items-start text-center sm:text-left gap-1">
-            <p className="text-sm font-black tracking-tight text-rally-text">
+            <p className="text-sm font-black tracking-tight text-rally-txt">
               RallyPulse © {currentYear}
             </p>
             <p className="text-xs font-medium text-rally-muted">
@@ -22,7 +22,7 @@ export default function Footer() {
 
           <div className="flex flex-col items-center sm:items-end text-center sm:text-right">
             <p className="text-xs font-bold text-rally-muted mb-2">Desarrollado por</p>
-            <a href="https://github.com/Sherman95" target="_blank" rel="noopener noreferrer" className="text-sm font-black text-rally-text hover:text-rally-accent transition-colors flex items-center gap-2 mb-2">
+            <a href="https://github.com/Sherman95" target="_blank" rel="noopener noreferrer" className="text-sm font-black text-rally-txt hover:text-rally-accent transition-colors flex items-center gap-2 mb-2">
               Ronald Azuero
             </a>
             
