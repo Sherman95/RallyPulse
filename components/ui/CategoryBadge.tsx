@@ -14,7 +14,7 @@ const CATEGORY_STYLES: Record<string, string> = {
   'UTV-R':        'bg-red-50     text-red-800    dark:bg-red-900/25    dark:text-red-300',
   'UTV-T':        'bg-orange-50  text-orange-800 dark:bg-orange-900/25 dark:text-orange-300',
   'CAMIONETAS':   'bg-violet-50  text-violet-800 dark:bg-violet-900/25 dark:text-violet-300',
-  'SIN CLASIFICAR': 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
+  'SIN CLASIFICAR': 'bg-rally-surface text-rally-muted'
 };
 
 interface CategoryBadgeProps {

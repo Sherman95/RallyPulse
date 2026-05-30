@@ -2,82 +2,77 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ============================================
+   MODO CLARO — fondo azul pizarra slate
+   ============================================ */
 :root {
-  --background: #f9fafb;
-  --foreground: #111827;
-
-  /* MODO CLARO — Paleta "Slate" */
-  --rally-bg: hsl(220, 18%, 88%);
-  --rally-surface: hsl(220, 20%, 95%);
-  --rally-surface2: hsl(0, 0%, 100%);
-  --rally-nav: hsl(225, 30%, 15%);
-  --rally-nav-txt: hsl(220, 18%, 88%);
-  --rally-accent: hsl(10, 83%, 50%);
-  --rally-txt: hsl(225, 30%, 15%);
-  --rally-muted: hsl(220, 10%, 40%);
-  --rally-hint: hsl(220, 8%, 63%);
-  --rally-gold: hsl(42, 100%, 30%);
-  --rally-silver: hsl(220, 10%, 36%);
-  --rally-bronze: hsl(22, 80%, 26%);
-  --rally-gap: hsl(14, 72%, 40%);
-  
-  /* Fallback legacy por si algún componente no se migró aún */
-  --rally-border: hsl(220, 20%, 95%);
-  --rally-text: hsl(225, 30%, 15%);
+  --rally-bg:        220 18% 88%;
+  --rally-surface:   220 20% 95%;
+  --rally-surface2:  0   0%  100%;
+  --rally-nav:       225 30% 15%;
+  --rally-nav-txt:   220 18% 88%;
+  --rally-accent:    10  83% 50%;
+  --rally-txt:       225 30% 15%;
+  --rally-muted:     220 10% 40%;
+  --rally-hint:      220  8% 63%;
+  --rally-gold:      42  100% 30%;
+  --rally-silver:    220 10% 36%;
+  --rally-bronze:    22  80% 26%;
+  --rally-gap:       14  72% 40%;
 }
 
+/* ============================================
+   MODO OSCURO — WRC Dark (Azul y Naranja)
+   ============================================ */
 .dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-
-  /* MODO OSCURO — Paleta "WRC Dark" (Azul y Naranja) */
-  --rally-bg: hsl(225, 30%, 6%);
-  --rally-surface: hsl(225, 30%, 10%);
-  --rally-surface2: hsl(225, 30%, 14%);
-  --rally-nav: hsl(225, 30%, 8%);
-  --rally-nav-txt: hsl(0, 0%, 94%);
-  --rally-accent: hsl(24, 100%, 55%); /* WRC Naranja */
-  --rally-txt: hsl(0, 0%, 94%);
-  --rally-muted: hsl(220, 10%, 65%);
-  --rally-hint: hsl(220, 10%, 40%);
-  --rally-gold: hsl(42, 100%, 55%);
-  --rally-silver: hsl(210, 8%, 72%);
-  --rally-bronze: hsl(28, 65%, 52%);
-  --rally-gap: hsl(24, 100%, 55%);
-  
-  /* Fallback legacy */
-  --rally-border: hsl(225, 30%, 14%);
-  --rally-text: hsl(0, 0%, 94%);
+  --rally-bg:        225 30%  6%;
+  --rally-surface:   225 30% 10%;
+  --rally-surface2:  225 30% 14%;
+  --rally-nav:       225 30%  8%;
+  --rally-nav-txt:   0   0%  94%;
+  --rally-accent:    24  100% 55%;
+  --rally-txt:       0   0%  94%;
+  --rally-muted:     220 10% 65%;
+  --rally-hint:      220 10% 40%;
+  --rally-gold:      42  100% 55%;
+  --rally-silver:    210  8% 72%;
+  --rally-bronze:    28  65% 52%;
+  --rally-gap:       24  100% 55%;
 }
 
-@theme {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+/* ============================================
+   TAILWIND V4 — clases utilitarias dinámicas
+   @theme inline = NO genera estilos base propios,
+   solo registra los tokens para que las clases
+   bg-rally-bg, text-rally-txt, etc. funcionen.
+   ============================================ */
+@theme inline {
+  --color-rally-bg:       hsl(var(--rally-bg));
+  --color-rally-surface:  hsl(var(--rally-surface));
+  --color-rally-surface2: hsl(var(--rally-surface2));
+  --color-rally-nav:      hsl(var(--rally-nav));
+  --color-rally-nav-txt:  hsl(var(--rally-nav-txt));
+  --color-rally-accent:   hsl(var(--rally-accent));
+  --color-rally-txt:      hsl(var(--rally-txt));
+  --color-rally-muted:    hsl(var(--rally-muted));
+  --color-rally-hint:     hsl(var(--rally-hint));
+  --color-rally-gold:     hsl(var(--rally-gold));
+  --color-rally-silver:   hsl(var(--rally-silver));
+  --color-rally-bronze:   hsl(var(--rally-bronze));
+  --color-rally-gap:      hsl(var(--rally-gap));
+
+  --color-rally-border:   hsl(var(--rally-surface));
+  --color-rally-text:     hsl(var(--rally-txt));
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-
-  /* Map to Tailwind v4 theme */
-  --color-rally-bg: var(--rally-bg);
-  --color-rally-surface: var(--rally-surface);
-  --color-rally-surface2: var(--rally-surface2);
-  --color-rally-nav: var(--rally-nav);
-  --color-rally-nav-txt: var(--rally-nav-txt);
-  --color-rally-accent: var(--rally-accent);
-  --color-rally-txt: var(--rally-txt);
-  --color-rally-muted: var(--rally-muted);
-  --color-rally-hint: var(--rally-hint);
-  --color-rally-gold: var(--rally-gold);
-  --color-rally-silver: var(--rally-silver);
-  --color-rally-bronze: var(--rally-bronze);
-  --color-rally-gap: var(--rally-gap);
-  
-  --color-rally-border: var(--rally-border);
-  --color-rally-text: var(--rally-text);
 }
 
+/* ============================================
+   Body — fondo controlado por variables
+   ============================================ */
 body {
-  background: var(--rally-bg);
-  color: var(--rally-text);
+  background-color: hsl(var(--rally-bg));
+  color: hsl(var(--rally-txt));
   font-family: Arial, Helvetica, sans-serif;
 }
-

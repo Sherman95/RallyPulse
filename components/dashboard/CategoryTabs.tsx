@@ -62,8 +62,8 @@ export default function CategoryTabs({ results, onPilotClick }: CategoryTabsProp
                 onClick={() => setSelectedCategory(cat)}
                 className={`whitespace-nowrap px-4 py-2 text-sm font-semibold rounded-lg transition-colors border flex items-center justify-center min-w-[80px] ${
                   isSelected 
-                    ? 'bg-[#f03a17] text-white border-[#f03a17] dark:bg-rally-accent dark:border-rally-accent' 
-                    : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50 dark:bg-rally-surface dark:text-rally-txt dark:border-rally-surface dark:hover:bg-rally-surface2'
+                    ? 'bg-rally-accent text-white border-rally-accent' 
+                    : 'bg-rally-surface2 text-rally-txt border-rally-border hover:bg-rally-surface'
                 }`}
               >
                 {displayCat}

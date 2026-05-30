@@ -60,12 +60,12 @@ export default function Header({ status = 'LIVE', lastUpdated = null }: HeaderPr
     <header className="sticky top-0 z-50 bg-rally-nav border-b border-white/[0.08]">
       <div className="flex items-center gap-2 h-14 px-4 max-w-5xl mx-auto">
         {/* Logo Imbabura */}
-        <div className="flex items-center justify-center bg-white rounded-md p-0.5 shadow-sm">
+        <div className="flex items-center justify-center bg-white rounded-md overflow-hidden shadow-sm">
           <Image 
             src="/logoRallyImbabura.webp" 
             alt="Rally Imbabura" 
-            width={28} 
-            height={28} 
+            width={44} 
+            height={44} 
             className="object-contain" 
           />
         </div>
