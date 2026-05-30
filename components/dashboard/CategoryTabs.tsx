@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import { EnrichedRallyResult } from '@/lib/mergeDrivers';
 import { CATEGORY_ORDER } from '@/lib/categoryResolver';
+import { formatDiffTime, parseTimeToSeconds } from '@/lib/time';
 import TopThree from './TopThree';
 import Leaderboard from './Leaderboard';
 
@@ -38,12 +39,34 @@ export default function CategoryTabs({ results, onPilotClick }: CategoryTabsProp
     }
     
     const filtered = results.filter(r => r.categoria === selectedCategory);
-    
-    // Recalcular posiciones locales para el podio
-    return filtered.map((item, index) => ({
-      ...item,
-      posicion: index + 1
-    }));
+
+    const leaderSeconds = filtered.length > 0
+      ? parseTimeToSeconds(filtered[0].tiempo)
+      : null;
+
+    // Recalcular posiciones y diferencias locales para el podio
+    return filtered.map((item, index) => {
+      const posicion = index + 1;
+
+      if (index === 0) {
+        return { ...item, posicion, diferencia: "-" };
+      }
+
+      if (item.diferencia && item.diferencia.startsWith("FALTA")) {
+        return { ...item, posicion };
+      }
+
+      if (leaderSeconds == null) {
+        return { ...item, posicion };
+      }
+
+      const t = parseTimeToSeconds(item.tiempo);
+      if (t == null) {
+        return { ...item, posicion };
+      }
+
+      return { ...item, posicion, diferencia: formatDiffTime(t - leaderSeconds) };
+    });
   }, [results, selectedCategory]);
 
   return (
