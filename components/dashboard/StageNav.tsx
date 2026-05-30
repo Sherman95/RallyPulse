@@ -13,7 +13,7 @@ export default function StageNav({ stages, selectedStage, onSelectStage }: Stage
   const allTabs = ["General", ...stages];
 
   return (
-    <div className="w-full bg-rally-surface border-b border-rally-bg sticky top-[44px] z-40 shadow-sm mb-6">
+    <div className="w-full bg-[#e8ecf1] dark:bg-rally-surface border-b border-gray-200 dark:border-rally-nav sticky top-[44px] z-40 mb-6 shadow-sm">
       <nav className="max-w-5xl mx-auto flex overflow-x-auto [&::-webkit-scrollbar]:hidden lg:[&::-webkit-scrollbar]:block px-4 sm:px-6 lg:px-8">
         {allTabs.map(tab => {
           const isSelected = selectedStage === tab;
@@ -22,10 +22,10 @@ export default function StageNav({ stages, selectedStage, onSelectStage }: Stage
             <button
               key={tab}
               onClick={() => onSelectStage(tab)}
-              className={`px-3 py-2.5 text-xs font-medium whitespace-nowrap flex-shrink-0 border-b-2 transition-colors ${
+              className={`px-5 py-3 text-sm font-bold whitespace-nowrap flex-shrink-0 border-t-[3px] transition-colors ${
                 isSelected 
-                  ? 'text-rally-accent border-rally-accent bg-rally-surface2' 
-                  : 'text-rally-muted border-transparent hover:text-rally-txt'
+                  ? 'border-[#f03a17] text-[#f03a17] bg-white dark:border-rally-accent dark:text-rally-accent dark:bg-rally-surface2' 
+                  : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-rally-muted dark:hover:text-rally-txt'
               }`}
             >
               {tab}

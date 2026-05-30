@@ -50,27 +50,23 @@ export default function CategoryTabs({ results, onPilotClick }: CategoryTabsProp
     <div className="w-full flex flex-col">
       
       {/* Navegación de Tabs */}
-      <div className="w-full border-b border-rally-surface mb-8 overflow-x-auto flex flex-nowrap [&::-webkit-scrollbar]:hidden lg:[&::-webkit-scrollbar]:block" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-        <div className="flex gap-2 sm:gap-6 px-2 sm:px-0">
+      <div className="w-full mb-8 overflow-x-auto flex flex-nowrap [&::-webkit-scrollbar]:hidden lg:[&::-webkit-scrollbar]:block" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+        <div className="flex gap-2 sm:gap-3 px-2 sm:px-0 py-1">
           {categories.map(cat => {
             const isSelected = selectedCategory === cat;
-            const count = cat === "General" ? results.length : results.filter(r => r.categoria === cat).length;
+            const displayCat = cat === "General" ? "Todas" : cat;
             
             return (
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`whitespace-nowrap px-4 py-3 text-sm font-semibold transition-colors border-b-2 flex items-center gap-2 ${
+                className={`whitespace-nowrap px-4 py-2 text-sm font-semibold rounded-lg transition-colors border flex items-center justify-center min-w-[80px] ${
                   isSelected 
-                    ? 'border-rally-accent text-rally-txt' 
-                    : 'border-transparent text-rally-muted hover:text-rally-txt hover:border-rally-surface'
+                    ? 'bg-[#f03a17] text-white border-[#f03a17] dark:bg-rally-accent dark:border-rally-accent' 
+                    : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50 dark:bg-rally-surface dark:text-rally-txt dark:border-rally-surface dark:hover:bg-rally-surface2'
                 }`}
               >
-                {cat}
-                {/* Badge opcional con la cantidad de participantes en la pestaña */}
-                <span className={`text-[10px] px-1.5 py-0.5 rounded-full border border-transparent ${isSelected ? 'bg-rally-accent/10 text-rally-accent border-rally-accent/20' : 'bg-rally-bg text-rally-muted border-rally-surface'}`}>
-                  {count}
-                </span>
+                {displayCat}
               </button>
             );
           })}

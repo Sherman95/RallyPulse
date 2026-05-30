@@ -17,22 +17,22 @@ export default function TopThree({ topDrivers, onPilotClick }: TopThreeProps) {
 
   const MEDAL: Record<number, any> = {
     1: {
-      border:  'border-rally-gold',
-      strip:   'bg-rally-gold',
-      numCol:  'text-rally-gold',
-      cardBg:  'bg-amber-50 dark:bg-amber-900/10',
+      border:  'border-[#eab308] dark:border-rally-gold',
+      strip:   'bg-[#eab308] dark:bg-rally-gold',
+      numCol:  'text-[#ca8a04] dark:text-rally-gold',
+      cardBg:  'bg-[#fffbe6] dark:bg-amber-900/10',
     },
     2: {
-      border:  'border-rally-silver/50',
-      strip:   'bg-rally-silver',
-      numCol:  'text-rally-silver',
-      cardBg:  'bg-slate-100 dark:bg-slate-800/20',
+      border:  'border-[#94a3b8] dark:border-rally-silver/50',
+      strip:   'bg-[#94a3b8] dark:bg-rally-silver',
+      numCol:  'text-[#475569] dark:text-rally-silver',
+      cardBg:  'bg-[#f8fafc] dark:bg-slate-800/20',
     },
     3: {
-      border:  'border-rally-bronze/50',
-      strip:   'bg-rally-bronze',
-      numCol:  'text-rally-bronze',
-      cardBg:  'bg-orange-50 dark:bg-orange-900/10',
+      border:  'border-[#c2410c] dark:border-rally-bronze/50',
+      strip:   'bg-[#c2410c] dark:bg-rally-bronze',
+      numCol:  'text-[#c2410c] dark:text-rally-bronze',
+      cardBg:  'bg-[#fff7ed] dark:bg-orange-900/10',
     },
   };
 
@@ -80,8 +80,8 @@ export default function TopThree({ topDrivers, onPilotClick }: TopThreeProps) {
   };
 
   return (
-    <section className="mb-12 w-full max-w-5xl mx-auto">
-      <div className="flex flex-col sm:flex-row items-end justify-center gap-4 lg:gap-6 px-4 sm:px-6">
+    <section className="mb-12 w-full max-w-5xl mx-auto px-2 sm:px-6">
+      <div className="bg-[#e8ecf1] dark:bg-transparent dark:border dark:border-rally-surface rounded-xl p-4 sm:p-6 lg:p-8 flex flex-col sm:flex-row items-end justify-center gap-4 lg:gap-6 shadow-inner dark:shadow-none">
         {/* Usamos las clases 'order' para alterar el flujo visual y poner al 1ro en medio */}
         {renderCard(second, 2, "order-2 sm:order-1")}
         {renderCard(first, 1, "order-1 sm:order-2")}
