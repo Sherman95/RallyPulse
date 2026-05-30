@@ -71,7 +71,7 @@ export default function Leaderboard({ results, hideHeader = false, onPilotClick 
                 <td className={`py-3 px-2 text-right text-xs font-mono tabular-nums whitespace-nowrap ${
                   position === 1 ? 'text-rally-hint' : 'text-rally-gap'
                 }`}>
-                  {position === 1 ? '—' : result.diferenciaPrimero}
+                  {position === 1 ? '—' : result.diferencia}
                 </td>
               </tr>
             );

@@ -71,7 +71,7 @@ export default function TopThree({ topDrivers, onPilotClick }: TopThreeProps) {
           {driver.tiempo}
         </span>
         <span className={`text-[10px] font-mono tabular-nums mb-2 ${position === 1 ? 'text-rally-hint' : 'text-rally-gap'}`}>
-          {position === 1 ? 'LÍDER' : driver.diferenciaPrimero}
+          {position === 1 ? 'LÍDER' : driver.diferencia}
         </span>
         
         <CategoryBadge cat={driver.categoria} />
