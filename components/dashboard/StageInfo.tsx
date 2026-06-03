@@ -15,7 +15,7 @@ export default function StageInfo({ stageId }: StageInfoProps) {
         <span className="text-xs text-rally-muted">·</span>
         <span className="text-xs sm:text-sm font-bold text-rally-txt">Clasificación acumulada</span>
         <span className="ml-auto text-[9px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-sm tracking-wide uppercase bg-rally-accent text-white">
-          EN CURSO
+          FINALIZADO
         </span>
       </div>
     );

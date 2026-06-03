@@ -1,3 +1,7 @@
+## Resultados finales (sin Google Sheets)
+
+Los resultados se guardan de forma local en [data/results.json](data/results.json). La API `/api/results` ahora lee ese archivo y el frontend ya no hace polling.
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

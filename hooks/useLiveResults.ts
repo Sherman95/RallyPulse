@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { EnrichedProcessedResults } from '@/lib/mergeDrivers';
 
-export type LiveStatus = 'LIVE' | 'ACTUALIZANDO' | 'ERROR TEMPORAL';
+export type LiveStatus = 'CULMINADO' | 'LIVE' | 'ACTUALIZANDO' | 'ERROR TEMPORAL';
 
 export function useLiveResults() {
   const [data, setData] = useState<EnrichedProcessedResults | null>(null);
@@ -24,7 +24,7 @@ export function useLiveResults() {
       
       setData(jsonData);
       setLastUpdated(new Date());
-      setStatus('LIVE');
+      setStatus('CULMINADO');
     } catch (error) {
       console.error('Error in useLiveResults:', error);
       setStatus('ERROR TEMPORAL');
@@ -39,15 +39,6 @@ export function useLiveResults() {
   useEffect(() => {
     // Primera carga
     fetchResults();
-
-    // Configurar polling cada 15 segundos.
-    // Aunque haya un request cada 15s desde el frontend, el backend solo
-    // irá a Google Sheets cada 30 segundos (gracias al revalidate en la ruta).
-    const intervalId = setInterval(() => {
-      fetchResults();
-    }, 15000);
-
-    return () => clearInterval(intervalId);
   }, [fetchResults]);
 
   return {

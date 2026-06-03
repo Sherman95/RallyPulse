@@ -35,6 +35,15 @@ export default function Header({ status = 'LIVE', lastUpdated = null }: HeaderPr
           ping: 'hidden', // Sin parpadeo si hay error
           label: 'OFFLINE'
         };
+      case 'CULMINADO':
+        return {
+          bg: 'bg-emerald-500/10 dark:bg-emerald-900/20',
+          text: 'text-emerald-600 dark:text-emerald-400',
+          ring: 'ring-emerald-500/20',
+          dot: 'bg-emerald-500',
+          ping: 'hidden',
+          label: 'CULMINADO'
+        };
       case 'LIVE':
       default:
         return {

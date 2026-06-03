@@ -8,7 +8,7 @@ import LiveDashboard from "@/components/dashboard/LiveDashboard";
 import { LiveStatus } from '@/hooks/useLiveResults';
 
 export default function Home() {
-  const [status, setStatus] = useState<LiveStatus>('ACTUALIZANDO');
+  const [status, setStatus] = useState<LiveStatus>('CULMINADO');
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
   const handleStatusChange = useCallback((newStatus: LiveStatus, newLastUpdated: Date | null) => {
