@@ -44,13 +44,28 @@ export default function Leaderboard({ results, hideHeader = false, onPilotClick 
                     : 'bg-rally-surface2 hover:bg-rally-surface'
                 }`}
               >
-                <td className={`py-2 sm:py-3 px-2 text-center text-xs sm:text-sm font-bold w-8 ${
-                  position === 1 ? 'text-rally-gold' :
-                  position === 2 ? 'text-rally-silver' :
-                  position === 3 ? 'text-rally-bronze' :
-                  'text-rally-hint'
-                }`}>
-                  {position}
+                <td className="py-2 sm:py-3 px-2 text-center text-xs sm:text-sm font-bold w-10 sm:w-12">
+                  {position === 1 ? (
+                    <div className="flex justify-center items-center h-full w-full">
+                      <svg className="w-5 h-5 text-[#FFD700]" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 15l-4.2 2.7.8-5L5 8.2l5.1-.7L12 3l1.9 4.5 5.1.7-3.6 4.5.8 5z"/>
+                      </svg>
+                    </div>
+                  ) : position === 2 ? (
+                    <div className="flex justify-center items-center h-full w-full">
+                      <svg className="w-4 h-4 text-[#C0C0C0]" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 15l-4.2 2.7.8-5L5 8.2l5.1-.7L12 3l1.9 4.5 5.1.7-3.6 4.5.8 5z"/>
+                      </svg>
+                    </div>
+                  ) : position === 3 ? (
+                    <div className="flex justify-center items-center h-full w-full">
+                      <svg className="w-4 h-4 text-[#CD7F32]" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 15l-4.2 2.7.8-5L5 8.2l5.1-.7L12 3l1.9 4.5 5.1.7-3.6 4.5.8 5z"/>
+                      </svg>
+                    </div>
+                  ) : (
+                    <span className="text-rally-hint">{position}</span>
+                  )}
                 </td>
                 <td className="py-2 sm:py-3 px-2 text-[10px] sm:text-[11px] text-rally-muted font-mono">
                   #{result.numero}

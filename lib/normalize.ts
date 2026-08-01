@@ -1,5 +1,6 @@
 import Papa from "papaparse";
 import { formatDiffTime, parseTimeToSeconds } from "@/lib/time";
+import { groupStageKeysByEtapa } from "@/lib/itineraryHelper";
 
 export interface RallyResult {
   posicion: number;
@@ -13,6 +14,7 @@ export interface RallyResult {
 export interface ProcessedResults {
   general: RallyResult[];
   stages: Record<string, RallyResult[]>;
+  etapas: Record<string, RallyResult[]>;
 }
 
 export function normalizeResults(csvText: string): ProcessedResults {
@@ -25,7 +27,8 @@ export function normalizeResults(csvText: string): ProcessedResults {
   
   const result: ProcessedResults = {
     general: [],
-    stages: {}
+    stages: {},
+    etapas: {}
   };
 
   let currentStageId = "general";
@@ -187,6 +190,21 @@ export function normalizeResults(csvText: string): ProcessedResults {
         r.diferencia = formatDiffTime(t - leaderTime);
       }
     });
+  }
+
+  // Generar clasificaciones matemáticas para cada Etapa (General del Día)
+  const groupedEtapas = groupStageKeysByEtapa(Object.keys(result.stages));
+  for (const group of groupedEtapas) {
+    const stageResultsForEtapa: Record<string, RallyResult[]> = {};
+    for (const key of group.keys) {
+      if (result.stages[key]) {
+        stageResultsForEtapa[key] = result.stages[key];
+      }
+    }
+    const computedEtapa = buildComputedGeneral(stageResultsForEtapa);
+    if (computedEtapa.length > 0) {
+      result.etapas[group.etapa] = computedEtapa;
+    }
   }
 
   return result;

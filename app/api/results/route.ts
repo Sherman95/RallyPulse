@@ -29,6 +29,9 @@ export async function GET() {
       general: rawData.general.map(enhanceResult),
       stages: Object.fromEntries(
         Object.entries(rawData.stages).map(([k, v]) => [k, v.map(enhanceResult)])
+      ),
+      etapas: Object.fromEntries(
+        Object.entries(rawData.etapas || {}).map(([k, v]) => [k, v.map(enhanceResult)])
       )
     };
     

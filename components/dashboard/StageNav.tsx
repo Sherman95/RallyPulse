@@ -18,6 +18,22 @@ export default function StageNav({ stages, selectedStage, onSelectStage }: Stage
         {allTabs.map(tab => {
           const isSelected = selectedStage === tab;
           
+          if (tab === "General") {
+            return (
+              <button
+                key={tab}
+                onClick={() => onSelectStage(tab)}
+                className={`px-3 sm:px-5 py-2 sm:py-3 text-xs sm:text-sm font-bold whitespace-nowrap flex-shrink-0 border-t-[3px] transition-colors ${
+                  isSelected 
+                    ? 'border-rally-accent text-rally-accent bg-rally-surface2' 
+                    : 'border-transparent text-rally-muted hover:text-rally-txt'
+                }`}
+              >
+                Acumulado
+              </button>
+            );
+          }
+
           return (
             <button
               key={tab}
