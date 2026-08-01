@@ -47,8 +47,8 @@ export function normalizeResults(csvText: string): ProcessedResults {
       return lower === 'clt' || lower === 'pos' || lower === 'posicion';
     });
 
-    // 1. Detectar si la fila es un título de bloque (ej. "TC4 - Nombre del Tramo")
-    const tcTitleMatch = firstCell.match(/^(TC\d+)/i);
+    // 1. Detectar si la fila es un título de bloque (ej. "TC4 - Nombre del Tramo" o "SUPER PRIME 1")
+    const tcTitleMatch = firstCell.match(/^(TC\s*\d+|SUPER PRIME\s*\d+|SP\s*\d+|SUPER PRIME|SP|TC)/i);
     // En Google Sheets a veces el título trae columnas extra; si la primera celda empieza con TCx,
     // lo tratamos como título de bloque siempre que NO sea una cabecera de tabla.
     if (tcTitleMatch && !isHeader) {
@@ -69,7 +69,7 @@ export function normalizeResults(csvText: string): ProcessedResults {
 
       // Registrar columnas TC si estamos en una tabla general o mixta
       row.forEach((cell, idx) => {
-        const tcMatch = cell.trim().match(/^(TC\d+)/i);
+        const tcMatch = cell.trim().match(/^(TC\s*\d+|SUPER PRIME\s*\d+|SP\s*\d+|SUPER PRIME|SP|TC)/i);
         if (tcMatch) {
           tcColumns[tcMatch[1].toUpperCase()] = idx;
         }

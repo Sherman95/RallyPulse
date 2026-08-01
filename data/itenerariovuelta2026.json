@@ -1,0 +1,312 @@
+{
+    "evento": {
+        "edicion": "EDICIÓN #47",
+        "nombre": "VUELTA AL ECUADOR",
+        "fecha": "JULIO / AGOSTO 2026",
+        "hashtag": "#VueltaalEcuador2026",
+        "auspiciantes": [
+            "Mobil 1",
+            "Vehicentro",
+            "Sinotruk",
+            "FEDAK",
+            "CNR"
+        ],
+        "provincias": [
+            "EL ORO",
+            "LOJA",
+            "AZUAY",
+            "CAÑAR",
+            "CHIMBORAZO",
+            "TUNGURAHUA",
+            "IMBABURA"
+        ]
+    },
+    "cronograma": [
+        {
+            "seccion": "REVISIONES + SUPER PRIME",
+            "dias": [
+                {
+                    "fecha": "Viernes 31 de Julio",
+                    "actividades": [
+                        {
+                            "actividad": "Ingreso",
+                            "lugar": "Pista El Oro Natural House - La Avanzada - El Oro",
+                            "horario": "13H00 - 17H00"
+                        },
+                        {
+                            "actividad": "Revisiones de Vehículos / Acreditación de Prensa",
+                            "horario": "14H00 - 18H00"
+                        },
+                        {
+                            "actividad": "Reconocimientos de Pista Controlados",
+                            "horario": "15H00 - 18H00"
+                        }
+                    ]
+                },
+                {
+                    "fecha": "Sábado 1 de Agosto",
+                    "actividades": [
+                        {
+                            "actividad": "Reagrupamiento",
+                            "lugar": "Pista Oro Natural House 'La Avanzada'",
+                            "horario": "08H15 - 09H00"
+                        },
+                        {
+                            "actividad": "Reconocimiento Super Prime / Revisiones de Vehículos",
+                            "horario": "09H00 - 10:30"
+                        },
+                        {
+                            "actividad": "Reunión de Pilotos / Presentación de Tripulaciones",
+                            "horario": "10H30 - 13H00"
+                        },
+                        {
+                            "actividad": "SUPER PRIME",
+                            "lugar": "Pista Oro Natural House",
+                            "horario": "13H33"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "etapa": "ETAPA 1",
+            "ruta": "El Oro - Loja",
+            "fecha": "Domingo 2 de Agosto",
+            "cronograma": [
+                {
+                    "tipo": "Reagrupamiento",
+                    "lugar": "Recinto Ferial Piñas",
+                    "horario": "07H30 - 08H30"
+                },
+                {
+                    "tipo": "TC",
+                    "numero": 1,
+                    "tramo": "Tarapal - Barrio San José",
+                    "horario": "08H48"
+                },
+                {
+                    "tipo": "TC",
+                    "numero": 2,
+                    "tramo": "Urna de San José - Villa Elvita",
+                    "horario": "09H10"
+                },
+                {
+                    "tipo": "Asistencia",
+                    "lugar": "Río Pindo",
+                    "horario": "09H56 - 10H36"
+                },
+                {
+                    "tipo": "TC",
+                    "numero": 3,
+                    "tramo": "Puente Río Pindo - Zambi",
+                    "horario": "10H49"
+                },
+                {
+                    "tipo": "TC",
+                    "numero": 4,
+                    "tramo": "San Pedro la Bendita - La Moringa",
+                    "horario": "13H09"
+                },
+                {
+                    "tipo": "Asistencia",
+                    "lugar": "Pista La Moringa",
+                    "horario": "13H14 - 13H54"
+                },
+                {
+                    "tipo": "TC",
+                    "numero": 5,
+                    "tramo": "Y Vía antigua Loja - Loja (Eólicas)",
+                    "horario": "14H37"
+                }
+            ]
+        },
+        {
+            "etapa": "ETAPA 2",
+            "ruta": "Loja - Azuay",
+            "fecha": "Lunes 3 de Agosto",
+            "cronograma": [
+                {
+                    "tipo": "Reagrupamiento",
+                    "lugar": "Kartódromo Muni. de Loja",
+                    "horario": "07H30 - 08H30"
+                },
+                {
+                    "tipo": "TC",
+                    "numero": 1,
+                    "tramo": "Loja (Motupe) - Vía a Cuenca",
+                    "horario": "08H48"
+                },
+                {
+                    "tipo": "TC",
+                    "numero": 2,
+                    "tramo": "Santiago - Puente San Lucas",
+                    "horario": "09H48"
+                },
+                {
+                    "tipo": "TC",
+                    "numero": 3,
+                    "tramo": "Carboncillo - Potrerillos",
+                    "horario": "11H23"
+                },
+                {
+                    "tipo": "Asistencia",
+                    "lugar": "Oña",
+                    "horario": "12H21 - 13H11"
+                },
+                {
+                    "tipo": "TC",
+                    "numero": 4,
+                    "tramo": "Oña (Salida) - Río León / Nabón",
+                    "horario": "13H24"
+                },
+                {
+                    "tipo": "TC",
+                    "numero": 5,
+                    "tramo": "Entrada Patadel - Zhiña",
+                    "horario": "14H43"
+                },
+                {
+                    "tipo": "TC",
+                    "numero": 6,
+                    "tramo": "Tarqui 1 (Chilcatotora) - Tarqui 2",
+                    "horario": "16H03"
+                }
+            ]
+        },
+        {
+            "etapa": "ETAPA 3",
+            "ruta": "Cañar - Chimborazo",
+            "fecha": "Miércoles 5 de Agosto",
+            "cronograma": [
+                {
+                    "tipo": "Reagrupamiento",
+                    "lugar": "Centro Rev. Técnica Azogues",
+                    "horario": "07H30 - 08H30"
+                },
+                {
+                    "tipo": "TC",
+                    "numero": 1,
+                    "tramo": "Rev. Técnica Azogues - Chavai",
+                    "horario": "08H38"
+                },
+                {
+                    "tipo": "TC",
+                    "numero": 2,
+                    "tramo": "Biblian - Jerusalem - Granja Burgay",
+                    "horario": "09H10"
+                },
+                {
+                    "tipo": "TC",
+                    "numero": 3,
+                    "tramo": "Molobob - Cañar",
+                    "horario": "09H43"
+                },
+                {
+                    "tipo": "Asistencia",
+                    "lugar": "Cañar",
+                    "horario": "10H01 - 11H01"
+                },
+                {
+                    "tipo": "TC",
+                    "numero": 4,
+                    "tramo": "Sisambe - Alausi (Puente)",
+                    "horario": "13H14"
+                },
+                {
+                    "tipo": "TC",
+                    "numero": 5,
+                    "tramo": "Guamote 2 - Guamote 1",
+                    "horario": "14H42"
+                },
+                {
+                    "tipo": "TC",
+                    "numero": 6,
+                    "tramo": "Alajaguan - Yaruquies",
+                    "horario": "16H03"
+                }
+            ]
+        },
+        {
+            "etapa": "ETAPA 4",
+            "ruta": "Tungurahua",
+            "fecha": "Jueves 6 de Agosto",
+            "cronograma": [
+                {
+                    "tipo": "Reagrupamiento",
+                    "lugar": "Parque Pasa",
+                    "horario": "07H00 - 08H30"
+                },
+                {
+                    "tipo": "TC",
+                    "numero": 1,
+                    "tramo": "Loma Gorda - Mula Corral - Tilivi",
+                    "horario": "09H13"
+                },
+                {
+                    "tipo": "TC",
+                    "numero": 2,
+                    "tramo": "Loma Gorda - Mula Corral - Tilivi",
+                    "horario": "11H11"
+                },
+                {
+                    "tipo": "Asistencia",
+                    "lugar": "Parque de Pasa",
+                    "horario": "11H56 - 12H56"
+                },
+                {
+                    "tipo": "TC",
+                    "numero": 3,
+                    "tramo": "Mercado de Pasa - Aguajan - Chibuleo",
+                    "horario": "12H59"
+                },
+                {
+                    "tipo": "TC",
+                    "numero": 4,
+                    "tramo": "Juan B Vela - Campus Uniandes",
+                    "horario": "13H53"
+                }
+            ]
+        },
+        {
+            "etapa": "ETAPA 5",
+            "ruta": "Imbabura",
+            "fecha": "Sábado 8 de Agosto",
+            "cronograma": [
+                {
+                    "tipo": "Reagrupamiento",
+                    "lugar": "Autódromo Yahuarcocha",
+                    "horario": "07H30 - 08H30"
+                },
+                {
+                    "tipo": "TC",
+                    "numero": 1,
+                    "tramo": "San Miguel Arcangel - Aloburo",
+                    "horario": "08H53"
+                },
+                {
+                    "tipo": "TC",
+                    "numero": 2,
+                    "tramo": "Aloburo - San Alfonso",
+                    "horario": "09H49"
+                },
+                {
+                    "tipo": "Asistencia",
+                    "lugar": "Autódromo Yahuarcocha",
+                    "horario": "10H53 - 11H43"
+                },
+                {
+                    "tipo": "TC",
+                    "numero": 3,
+                    "tramo": "San Miguel Arcangel - Aloburo",
+                    "horario": "12H06"
+                },
+                {
+                    "tipo": "TC",
+                    "numero": 4,
+                    "tramo": "Autódromo de Yahuarcocha",
+                    "horario": "13H20"
+                }
+            ]
+        }
+    ]
+}

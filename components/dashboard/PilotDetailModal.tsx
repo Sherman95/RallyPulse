@@ -132,7 +132,7 @@ export default function PilotDetailModal({ pilot, allData, onClose }: PilotDetai
     ctx.fillStyle = '#f5f6fa';
     ctx.fillRect(0, 0, width, height);
 
-    const logo = await loadImage('/logoRallyImbabura.webp');
+    const logo = await loadImage('/logovuelta2025.webp');
     if (logo) {
       const maxLogoW = 320;
       const maxLogoH = 260;

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import SafetyBanner from "@/components/home/SafetyBanner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -48,9 +49,12 @@ export default function RootLayout({
           })()
         `}} />
       </head>
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col pb-[calc(2rem+env(safe-area-inset-bottom))]">
         {children}
         <Analytics />
+        <div className="fixed bottom-0 left-0 w-full z-50 bg-black pb-[env(safe-area-inset-bottom)]">
+          <SafetyBanner />
+        </div>
       </body>
     </html>
   );
