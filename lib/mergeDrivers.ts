@@ -24,6 +24,7 @@ export interface EnrichedRallyResult {
 export interface EnrichedProcessedResults {
   general: EnrichedRallyResult[];
   stages: Record<string, EnrichedRallyResult[]>;
+  etapas?: Record<string, EnrichedRallyResult[]>;
 }
 
 /**
