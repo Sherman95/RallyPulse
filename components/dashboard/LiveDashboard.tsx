@@ -10,6 +10,7 @@ import PilotDetailModal from './PilotDetailModal';
 import { CategoryTabsSkeleton } from '@/components/ui/Skeletons';
 import { EnrichedRallyResult } from '@/lib/mergeDrivers';
 import { getCurrentEvent, ActiveEvent, groupStageKeysByEtapa, getEventForStageKey, getAllEtapaNames } from '@/lib/itineraryHelper';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface LiveDashboardProps {
   onStatusChange: (status: any, lastUpdated: Date | null) => void;
@@ -254,64 +255,75 @@ export default function LiveDashboard({ onStatusChange }: LiveDashboardProps) {
         />
       )}
 
-      <StageInfo 
-        stageId={currentStageId} 
-        isAutoFinished={
-          currentStageId !== "General" && 
-          data.general && 
-          data.general.length > 0 && 
-          currentStageData.length >= data.general.length
-        }
-      />
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentStageId}
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -15 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className="w-full flex flex-col"
+        >
+          <StageInfo 
+            stageId={currentStageId} 
+            isAutoFinished={
+              currentStageId !== "General" && 
+              data.general && 
+              data.general.length > 0 && 
+              currentStageData.length >= data.general.length
+            }
+          />
 
-      {/* Buscador Global (Light Mode) */}
-      <div className="w-full mb-6 relative">
-        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <svg className="h-5 w-5 text-rally-muted" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
-          </svg>
-        </div>
-        <input
-          type="text"
-          placeholder={`Buscar en ${currentStageId}...`}
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="block w-full pl-10 pr-3 py-2 sm:py-3 border border-rally-surface rounded-xl leading-5 bg-rally-surface placeholder-rally-muted text-rally-txt focus:outline-none focus:ring-2 focus:ring-rally-accent focus:border-rally-accent text-sm shadow-sm transition-all"
-        />
-        {isSearching && (
-          <button 
-            onClick={() => setSearchQuery("")}
-            className="absolute inset-y-0 right-0 pr-3 flex items-center text-rally-muted hover:text-rally-txt"
-          >
-            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        )}
-      </div>
-
-      {isSearching ? (
-        <div className="flex flex-col bg-rally-surface rounded-xl shadow-sm border border-rally-surface p-3 sm:p-6 min-h-[50vh]">
-          <h2 className="text-lg font-bold text-rally-txt mb-6 flex items-center gap-2">
-            Resultados de búsqueda
-            <span className="bg-rally-bg text-rally-muted px-2 py-0.5 rounded-full text-xs font-semibold border border-rally-surface">
-              {searchResults.length}
-            </span>
-          </h2>
-          {searchResults.length > 0 ? (
-            <Leaderboard results={searchResults} hideHeader onPilotClick={setSelectedPilot} />
-          ) : (
-            <div className="flex flex-col items-center justify-center py-12 text-rally-muted">
-              <svg className="w-12 h-12 mb-4 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          {/* Buscador Global (Light Mode) */}
+          <div className="w-full mb-6 relative">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg className="h-5 w-5 text-rally-muted" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
               </svg>
-              <p>No se encontraron resultados para "{searchQuery}"</p>
             </div>
+            <input
+              type="text"
+              placeholder={`Buscar en ${currentStageId}...`}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="block w-full pl-10 pr-3 py-2 sm:py-3 border border-rally-surface rounded-xl leading-5 bg-rally-surface placeholder-rally-muted text-rally-txt focus:outline-none focus:ring-2 focus:ring-rally-accent focus:border-rally-accent text-sm shadow-sm transition-all"
+            />
+            {isSearching && (
+              <button 
+                onClick={() => setSearchQuery("")}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-rally-muted hover:text-rally-txt"
+              >
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            )}
+          </div>
+
+          {isSearching ? (
+            <div className="flex flex-col bg-rally-surface rounded-xl shadow-sm border border-rally-surface p-3 sm:p-6 min-h-[50vh]">
+              <h2 className="text-lg font-bold text-rally-txt mb-6 flex items-center gap-2">
+                Resultados de búsqueda
+                <span className="bg-rally-bg text-rally-muted px-2 py-0.5 rounded-full text-xs font-semibold border border-rally-surface">
+                  {searchResults.length}
+                </span>
+              </h2>
+              {searchResults.length > 0 ? (
+                <Leaderboard results={searchResults} hideHeader onPilotClick={setSelectedPilot} />
+              ) : (
+                <div className="flex flex-col items-center justify-center py-12 text-rally-muted">
+                  <svg className="w-12 h-12 mb-4 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                  <p>No se encontraron resultados para "{searchQuery}"</p>
+                </div>
+              )}
+            </div>
+          ) : (
+            <CategoryTabs results={currentStageData} onPilotClick={setSelectedPilot} />
           )}
-        </div>
-      ) : (
-        <CategoryTabs results={currentStageData} onPilotClick={setSelectedPilot} />
-      )}
+        </motion.div>
+      </AnimatePresence>
 
       {/* Modal de Detalle de Piloto */}
       <PilotDetailModal 

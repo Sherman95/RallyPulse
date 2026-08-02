@@ -9,9 +9,9 @@ export function useLiveResults() {
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [isFirstLoad, setIsFirstLoad] = useState<boolean>(true);
 
-  const fetchResults = useCallback(async () => {
+  const fetchResults = useCallback(async (silent = false) => {
     try {
-      if (!isFirstLoad) {
+      if (!isFirstLoad && !silent) {
         setStatus('ACTUALIZANDO');
       }
 
@@ -24,7 +24,7 @@ export function useLiveResults() {
       
       setData(jsonData);
       setLastUpdated(new Date());
-      setStatus('CULMINADO');
+      setStatus('LIVE');
     } catch (error) {
       console.error('Error in useLiveResults:', error);
       setStatus('ERROR TEMPORAL');
@@ -39,6 +39,13 @@ export function useLiveResults() {
   useEffect(() => {
     // Primera carga
     fetchResults();
+
+    // Polling cada 30 segundos de fondo (silencioso)
+    const interval = setInterval(() => {
+      fetchResults(true);
+    }, 30000);
+
+    return () => clearInterval(interval);
   }, [fetchResults]);
 
   return {

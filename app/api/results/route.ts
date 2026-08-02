@@ -3,7 +3,7 @@ import { fetchSheetCsv } from "@/lib/fetchSheet";
 import { normalizeResults, RallyResult } from "@/lib/normalize";
 import { resolveDriverMetadata } from "@/lib/categoryResolver";
 
-export const revalidate = false;
+export const revalidate = 0;
 
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRckYYdRrr3u4YgmsVbGoCuOlUYBCYoSkUoCHVg6qgbsANTQA53p5SW-1mnGUhFWPPp42JkXzRnknD0/pub?gid=0&single=true&output=csv";
 

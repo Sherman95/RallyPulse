@@ -1,11 +1,13 @@
 "use client";
 
 import React, { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { EnrichedRallyResult } from '@/lib/mergeDrivers';
 import { CATEGORY_ORDER } from '@/lib/categoryResolver';
 import { formatDiffTime, parseTimeToSeconds } from '@/lib/time';
 import TopThree from './TopThree';
 import Leaderboard from './Leaderboard';
+import EmptyState3D from './../ui/EmptyState3D';
 
 interface CategoryTabsProps {
   results: EnrichedRallyResult[];
@@ -96,15 +98,23 @@ export default function CategoryTabs({ results, onPilotClick }: CategoryTabsProp
         </div>
       </div>
 
-      <TopThree topDrivers={filteredResults} onPilotClick={onPilotClick} />
-      
-      {filteredResults.length > 0 ? (
-        <Leaderboard results={filteredResults} onPilotClick={onPilotClick} />
-      ) : (
-        <div className="py-12 text-center text-rally-muted text-sm bg-rally-surface border border-rally-surface rounded-xl">
-          No hay vehículos registrados en esta categoría.
-        </div>
-      )}
+      <AnimatePresence mode="wait">
+        <motion.div 
+          key={selectedCategory}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.2 }}
+        >
+          <TopThree topDrivers={filteredResults} onPilotClick={onPilotClick} />
+          
+          {filteredResults.length > 0 ? (
+            <Leaderboard results={filteredResults} onPilotClick={onPilotClick} />
+          ) : (
+            <EmptyState3D />
+          )}
+        </motion.div>
+      </AnimatePresence>
       
     </div>
   );

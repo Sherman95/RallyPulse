@@ -1,35 +1,46 @@
+"use client";
+
+import React from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import ItineraryCarousel from '@/components/itinerario/ItineraryCarousel';
-
-const flyers = [
-  { src: '/itinerario/principal.png', alt: 'Flyer Principal', label: 'Mapa General', desc: 'Ruta completa de la competencia' },
-  { src: '/itinerario/sp.png', alt: 'Flyer Super Prime', label: 'Súper Especial (Clasificación)', desc: 'Tramo cronometrado inicial' },
-  { src: '/itinerario/etapa1.png', alt: 'Flyer Etapa 1', label: 'Etapa 1', desc: 'Primer día de competencia oficial' },
-  { src: '/itinerario/etapa2.png', alt: 'Flyer Etapa 2', label: 'Etapa 2', desc: 'Segundo día de rutas de montaña' },
-  { src: '/itinerario/etapa3.png', alt: 'Flyer Etapa 3', label: 'Etapa 3', desc: 'Tercer día de competencia' },
-  { src: '/itinerario/etapa4.png', alt: 'Flyer Etapa 4', label: 'Etapa 4', desc: 'Cuarto día, tramos técnicos' },
-  { src: '/itinerario/etapa5.png', alt: 'Flyer Etapa 5', label: 'Etapa 5', desc: 'Cierre de la vuelta y premiación' }
-];
+import ItineraryTimeline from '@/components/itinerario/ItineraryTimeline';
+import { motion } from 'framer-motion';
 
 export default function ItinerarioPage() {
   return (
     <div className="flex min-h-screen flex-col font-sans antialiased selection:bg-rally-accent/20">
       <Header />
 
-      <main className="flex-1 flex flex-col items-center p-4 sm:p-8 bg-rally-bg">
-        <div className="w-full max-w-4xl">
-          <div className="mb-8 text-center sm:text-left">
-            <h1 className="text-3xl font-extrabold text-rally-txt tracking-tight uppercase">
-              Itinerario Oficial
-            </h1>
-            <p className="text-rally-muted mt-2">
-              Cronograma detallado y mapas de las etapas de la Vuelta a la República.
-            </p>
+      <main className="flex-1 flex flex-col items-center p-4 sm:p-8 bg-rally-bg overflow-x-hidden">
+        <div className="w-full max-w-5xl">
+          
+          <div className="mb-10 text-center sm:text-left">
+            <motion.h1 
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tighter uppercase transition-colors"
+            >
+              Itinerario <span className="text-rally-accent">Oficial</span>
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              className="text-slate-600 dark:text-rally-muted mt-2 text-lg transition-colors"
+            >
+              Planifica tu ruta. Conoce todos los tiempos, tramos cronometrados y enlaces de la Vuelta a la República.
+            </motion.p>
           </div>
 
-          <div className="w-full pb-10">
-            <ItineraryCarousel flyers={flyers} />
+          {/* Área de Contenido: Solo Timeline */}
+          <div className="w-full pb-16 min-h-[60vh]">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <ItineraryTimeline />
+            </motion.div>
           </div>
         </div>
       </main>
