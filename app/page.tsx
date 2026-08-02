@@ -9,10 +9,10 @@ import SpectatorGuide from '@/components/home/SpectatorGuide';
 import Marquee from '@/components/home/Marquee';
 import RouteTimeline from '@/components/home/RouteTimeline';
 import TiltCard from '@/components/ui/TiltCard';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 1 },
   show: {
     opacity: 1,
@@ -22,7 +22,7 @@ const containerVariants = {
   }
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 30 },
   show: { 
     opacity: 1, 
