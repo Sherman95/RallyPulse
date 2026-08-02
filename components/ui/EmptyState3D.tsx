@@ -14,7 +14,7 @@ function CheckeredFlag() {
   const cubeSize = 0.25;
 
   // Generar la matriz de cubos
-  const cubes: React.ReactNode[] = [];
+  const cubes: { id: string; row: number; col: number; color: string }[] = [];
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
       const isBlack = (r + c) % 2 === 0;
