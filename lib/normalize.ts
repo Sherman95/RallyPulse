@@ -160,11 +160,22 @@ export function normalizeResults(csvText: string): ProcessedResults {
 
   recalculateDifferences(result.general);
 
-  // Si la tabla "General" del sheet viene incompleta (p. ej. solo quienes completaron todos los TCs),
-  // construimos una general calculada con TODOS los pilotos vistos en cualquier TC.
+  // Mezclar la tabla General oficial (que viene con los tiempos oficiales y penalizaciones)
+  // con los pilotos que no aparecen en la General pero sí corrieron algún TC (abandonos/reenganchados).
   const computedGeneral = buildComputedGeneral(result.stages);
-  if (computedGeneral.length > result.general.length) {
-    result.general = computedGeneral;
+  
+  if (computedGeneral.length > 0) {
+    const officialNumbers = new Set(result.general.map(r => r.numero));
+    const missingDrivers = computedGeneral.filter(c => !officialNumbers.has(c.numero));
+    
+    // Asignar posiciones continuas a los que faltan
+    let nextPos = result.general.length > 0 ? Math.max(...result.general.map(r => r.posicion)) + 1 : 1;
+    missingDrivers.forEach(d => {
+      d.posicion = nextPos++;
+    });
+
+    // Solo añadimos a los que faltan
+    result.general.push(...missingDrivers);
   }
 
   // Generar clasificaciones matemáticas para cada TC
