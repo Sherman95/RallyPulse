@@ -54,6 +54,7 @@ export default function Leaderboard({ results, hideHeader = false, onPilotClick 
                 <th className="py-3 px-2 w-8 text-center">#</th>
                 <th className="py-3 px-2 w-12">No.</th>
                 <th className="py-3 px-2">Piloto</th>
+                <th className="py-3 px-2 text-center w-24">Penal.</th>
                 <th className="py-3 px-2 text-right">Tiempo</th>
                 <th className="py-3 px-2 text-right">Dif.</th>
               </tr>
@@ -68,11 +69,9 @@ export default function Leaderboard({ results, hideHeader = false, onPilotClick 
                   key={result.numero}
                   onClick={() => onPilotClick && onPilotClick(result)}
                   className={`border-b transition-colors ${onPilotClick ? 'cursor-pointer' : ''} ${
-                    hasPendingPenalty 
-                      ? 'bg-yellow-50/10 border-l-4 border-yellow-400 hover:bg-yellow-100/10'
-                      : position === 1
-                        ? 'bg-rally-gold/10 border-rally-border' 
-                        : 'bg-rally-surface2 border-rally-border hover:bg-rally-surface'
+                    position === 1
+                      ? 'bg-rally-gold/10 border-rally-border' 
+                      : 'bg-rally-surface2 border-rally-border hover:bg-rally-surface'
                   }`}
                 >
                   <td className="py-3 px-2 text-center w-12">
@@ -91,23 +90,26 @@ export default function Leaderboard({ results, hideHeader = false, onPilotClick 
                       </div>
                       <div className="flex items-center gap-2">
                         <CategoryBadge cat={result.categoria} />
-                        {result.penalizacionMs && result.penalizacionMs > 0 ? (
-                          <span className="text-[10px] font-bold text-red-600 bg-red-100 dark:bg-red-950/30 px-1.5 py-0.5 rounded">
-                            {formatPenalty(result.penalizacionMs)}
-                          </span>
-                        ) : null}
                       </div>
                     </div>
                   </td>
+                  <td className="py-3 px-2 text-center w-24">
+                    {result.penalizacionMs && result.penalizacionMs > 0 ? (
+                      <span className={`text-[11px] font-bold px-2 py-0.5 rounded ${
+                        hasPendingPenalty 
+                          ? 'text-yellow-700 bg-yellow-100 dark:bg-yellow-900/30' 
+                          : 'text-red-600 bg-red-100 dark:bg-red-950/30'
+                      }`}
+                      title={hasPendingPenalty ? "Penalidad aún no sumada al tiempo total" : "Penalidad aplicada"}
+                      >
+                        {formatPenalty(result.penalizacionMs)}
+                      </span>
+                    ) : (
+                      <span className="text-rally-muted/30 text-xs">—</span>
+                    )}
+                  </td>
                   <td className="py-3 px-2 text-right">
                     <div className="flex items-center justify-end gap-1">
-                      {hasPendingPenalty && (
-                        <span className="text-yellow-500" title={`Tiempo neto. Penalización de ${formatPenalty(result.penalizacionMs || 0)} no sumada al total.`}>
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
-                            <path fillRule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
-                          </svg>
-                        </span>
-                      )}
                       <span className={`text-sm font-mono tabular-nums whitespace-nowrap ${hasPendingPenalty ? 'text-yellow-600 dark:text-yellow-500 font-bold' : 'text-rally-txt'}`}>
                         {result.tiempo}
                       </span>
@@ -137,11 +139,9 @@ export default function Leaderboard({ results, hideHeader = false, onPilotClick 
               key={result.numero}
               onClick={() => onPilotClick && onPilotClick(result)}
               className={`flex items-center gap-3 p-3 rounded-xl border ${onPilotClick ? 'cursor-pointer active:scale-[0.98]' : ''} transition-all ${
-                hasPendingPenalty
-                  ? 'bg-yellow-50/10 border-yellow-400'
-                  : isFirst 
-                    ? 'bg-gradient-to-r from-rally-gold/10 to-rally-surface border-rally-gold/30' 
-                    : 'bg-rally-surface border-rally-border shadow-sm'
+                isFirst 
+                  ? 'bg-gradient-to-r from-rally-gold/10 to-rally-surface border-rally-gold/30' 
+                  : 'bg-rally-surface border-rally-border shadow-sm'
               }`}
             >
               <div className="flex flex-col items-center justify-center min-w-[32px] gap-1">
@@ -162,7 +162,12 @@ export default function Leaderboard({ results, hideHeader = false, onPilotClick 
                   <div className="flex items-center gap-2">
                     <CategoryBadge cat={result.categoria} />
                     {result.penalizacionMs && result.penalizacionMs > 0 ? (
-                      <span className="text-[10px] font-bold text-red-600 bg-red-100 dark:bg-red-950/30 px-1.5 py-0.5 rounded">
+                      <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
+                        hasPendingPenalty
+                          ? 'text-yellow-700 bg-yellow-100 dark:bg-yellow-900/30' 
+                          : 'text-red-600 bg-red-100 dark:bg-red-950/30'
+                      }`}
+                      title={hasPendingPenalty ? "Penalidad pendiente" : "Penalidad aplicada"}>
                         {formatPenalty(result.penalizacionMs)}
                       </span>
                     ) : null}
@@ -172,13 +177,6 @@ export default function Leaderboard({ results, hideHeader = false, onPilotClick 
 
               <div className="flex flex-col items-end gap-0.5 whitespace-nowrap">
                 <div className="flex items-center gap-1">
-                  {hasPendingPenalty && (
-                    <span className="text-yellow-500">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5">
-                        <path fillRule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
-                      </svg>
-                    </span>
-                  )}
                   <span className={`text-base font-mono tabular-nums leading-none ${hasPendingPenalty ? 'text-yellow-600 dark:text-yellow-500 font-bold' : 'text-rally-txt font-bold'}`}>
                     {result.tiempo}
                   </span>
