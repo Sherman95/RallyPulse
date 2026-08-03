@@ -129,6 +129,13 @@ export default function Leaderboard({ results, hideHeader = false, onPilotClick 
 
       {/* Vista Móvil (Tarjetas) */}
       <div className="md:hidden flex flex-col gap-3 pb-4">
+        {!hideHeader && results.length > 0 && (
+          <div className="flex items-center px-3 pb-1 pt-2 text-[10px] font-bold text-rally-hint uppercase tracking-widest">
+            <div className="w-[32px] text-center shrink-0">#</div>
+            <div className="flex-1 ml-3">Piloto / Equipo</div>
+            <div className="text-right">Tiempo / Dif.</div>
+          </div>
+        )}
         {results.map((result, index) => {
           const position = index + 1;
           const isFirst = position === 1;
