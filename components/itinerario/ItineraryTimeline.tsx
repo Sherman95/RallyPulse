@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import itinerarioData from '@/data/itenerariovuelta2026.json';
 
@@ -15,6 +15,30 @@ interface Actividad {
 
 export default function ItineraryTimeline() {
   const [expandedSection, setExpandedSection] = useState<number | null>(0);
+
+  useEffect(() => {
+    const today = new Date();
+    const currentDay = today.getDate().toString();
+    const searchString = ` ${currentDay} de `;
+
+    for (let i = 0; i < itinerarioData.cronograma.length; i++) {
+       const section: any = itinerarioData.cronograma[i];
+       
+       if (section.fecha && section.fecha.includes(searchString)) {
+           setExpandedSection(i);
+           return;
+       }
+       
+       if (section.dias) {
+           for (const dia of section.dias) {
+               if (dia.fecha && dia.fecha.includes(searchString)) {
+                   setExpandedSection(i);
+                   return;
+               }
+           }
+       }
+    }
+  }, []);
 
   const toggleSection = (index: number) => {
     setExpandedSection(prev => prev === index ? null : index);
@@ -74,7 +98,7 @@ export default function ItineraryTimeline() {
               className="w-full text-left px-6 py-5 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-white/5 transition-colors group"
             >
               <div>
-                <h2 className="text-xl font-bold text-slate-900 dark:text-white uppercase tracking-wider group-hover:text-rally-accent transition-colors">
+                <h2 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white uppercase tracking-wider group-hover:text-rally-accent transition-colors">
                   {title}
                 </h2>
                 {date && <p className="text-slate-500 dark:text-rally-muted text-sm mt-1">{date}</p>}
@@ -112,7 +136,7 @@ export default function ItineraryTimeline() {
                                 <div className={`absolute left-0 mt-1.5 w-6 h-6 rounded-full border-2 z-10 flex items-center justify-center ${getDotStyle(act.tipo, act.actividad)}`}></div>
                                 <div className={`ml-12 p-4 w-full rounded-xl border-l-4 transition-colors ${getStyle(act.tipo, act.actividad)}`}>
                                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                                    <h5 className="font-bold text-slate-900 dark:text-white text-lg">{act.actividad}</h5>
+                                    <h5 className="font-bold text-slate-900 dark:text-white text-base md:text-lg">{act.actividad}</h5>
                                     <span className="inline-flex items-center gap-1.5 text-sm font-semibold px-3 py-1 bg-white dark:bg-black/40 rounded-lg text-slate-900 dark:text-white shadow-sm dark:shadow-none border border-slate-200 dark:border-transparent whitespace-nowrap">
                                       {getIcon(act.tipo, act.actividad)}
                                       {act.horario}
@@ -133,7 +157,7 @@ export default function ItineraryTimeline() {
                           <div className={`ml-12 p-4 w-full rounded-xl border-l-4 transition-colors ${getStyle(act.tipo, act.tramo)}`}>
                             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                               <div>
-                                <h5 className="font-bold text-slate-900 dark:text-white text-lg">
+                                <h5 className="font-bold text-slate-900 dark:text-white text-base md:text-lg">
                                   {act.tipo === "TC" ? `TC ${act.numero}: ${act.tramo}` : (act.tipo || "Enlace")}
                                 </h5>
                               </div>

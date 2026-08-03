@@ -18,7 +18,7 @@ export default function ItinerarioPage() {
             <motion.h1 
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tighter uppercase transition-colors"
+              className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tighter uppercase transition-colors"
             >
               Itinerario <span className="text-rally-accent">Oficial</span>
             </motion.h1>
