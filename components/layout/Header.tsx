@@ -56,11 +56,11 @@ export default function Header({ status, lastUpdated = null }: HeaderProps) {
               className="w-16 sm:w-20 h-auto object-contain relative z-10 transition-transform hover:scale-105"
             />
           </div>
-          <div className="hidden sm:block">
-            <h1 className="text-xl sm:text-2xl font-black tracking-tighter text-white uppercase leading-none drop-shadow-sm flex items-center">
-              Vuelta a la <span className="text-rally-accent ml-1.5">República</span>
+          <div className="flex flex-col pt-1 sm:pt-0">
+            <h1 className="text-[15px] sm:text-2xl font-black tracking-tighter text-white uppercase leading-none drop-shadow-sm flex items-center">
+              Vuelta a la <span className="text-rally-accent ml-1 sm:ml-1.5">República</span>
             </h1>
-            <p className="text-[10px] sm:text-xs text-white/60 font-medium tracking-widest uppercase mt-0.5">
+            <p className="text-[9px] sm:text-xs text-white/60 font-medium tracking-widest uppercase mt-0.5">
               RallyPulse
             </p>
           </div>
