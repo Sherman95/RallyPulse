@@ -222,9 +222,9 @@ export function getEventForStageKey(stageKey: string): ActiveEvent | null {
     return spEvent || null;
   }
 
-  // Try to find if there is an Etapa marker in the key
+  // Try to find if there is an Etapa marker in the key (e.g. _E2, E2, _ETAPA 2, ETAPA 2)
   let targetEtapaNum: number | null = null;
-  const etapaMatch = stageKey.match(/_E(\d+)|_ETAPA\s*(\d+)/i);
+  const etapaMatch = stageKey.match(/(?:_|\b)E(\d+)|(?:_|\b)ETAPA\s*(\d+)/i);
   if (etapaMatch) {
     targetEtapaNum = parseInt(etapaMatch[1] || etapaMatch[2], 10);
   }

@@ -1,5 +1,11 @@
 export function parseTimeToSeconds(timeStr: string): number | null {
-  const parts = timeStr.split(":");
+  // Limpiar espacios extra
+  let cleanTime = timeStr.trim().toLowerCase();
+  
+  // Si viene con formato "1h29:33.9", cambiar la 'h' por ':'
+  cleanTime = cleanTime.replace('h', ':');
+  
+  const parts = cleanTime.split(":");
   let total = 0;
 
   if (parts.length === 2) {

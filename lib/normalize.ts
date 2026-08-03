@@ -51,11 +51,11 @@ export function normalizeResults(csvText: string): ProcessedResults {
     });
 
     // 1. Detectar si la fila es un título de bloque (ej. "TC4 - Nombre del Tramo" o "SUPER PRIME 1" o "TC1_E2")
-    const tcTitleMatch = firstCell.match(/^(TC\s*\d+[_A-Z0-9-]*|SUPER PRIME\s*\d+[_A-Z0-9-]*|SP\s*\d+[_A-Z0-9-]*|SUPER PRIME|SP|TC)/i);
+    const tcTitleMatch = firstCell.match(/^(TC\s*\d+[\s_A-Z0-9-]*|SUPER PRIME\s*\d+[\s_A-Z0-9-]*|SP\s*\d+[\s_A-Z0-9-]*|SUPER PRIME|SP|TC)/i);
     // En Google Sheets a veces el título trae columnas extra; si la primera celda empieza con TCx,
     // lo tratamos como título de bloque siempre que NO sea una cabecera de tabla.
     if (tcTitleMatch && !isHeader) {
-      currentStageId = tcTitleMatch[1].toUpperCase();
+      currentStageId = tcTitleMatch[1].toUpperCase().trim();
       // Reiniciamos los índices porque la nueva tabla podría tener un orden distinto
       colPos = -1; colNum = -1; colEq = -1; colVeh = -1; colTime = -1;
       continue;
@@ -72,9 +72,9 @@ export function normalizeResults(csvText: string): ProcessedResults {
 
       // Registrar columnas TC si estamos en una tabla general o mixta
       row.forEach((cell, idx) => {
-        const tcMatch = cell.trim().match(/^(TC\s*\d+[_A-Z0-9-]*|SUPER PRIME\s*\d+[_A-Z0-9-]*|SP\s*\d+[_A-Z0-9-]*|SUPER PRIME|SP|TC)/i);
+        const tcMatch = cell.trim().match(/^(TC\s*\d+[\s_A-Z0-9-]*|SUPER PRIME\s*\d+[\s_A-Z0-9-]*|SP\s*\d+[\s_A-Z0-9-]*|SUPER PRIME|SP|TC)/i);
         if (tcMatch) {
-          tcColumns[tcMatch[1].toUpperCase()] = idx;
+          tcColumns[tcMatch[1].toUpperCase().trim()] = idx;
         }
       });
       continue;
