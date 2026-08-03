@@ -165,9 +165,11 @@ export function getCurrentEvent(now: Date = new Date()): ActiveEvent | null {
  */
 export function sortStageKeys(keys: string[]): string[] {
   return [...keys].sort((a, b) => {
-    // Extraer números si los hay
-    const numA = parseInt(a.replace(/\D/g, "")) || 0;
-    const numB = parseInt(b.replace(/\D/g, "")) || 0;
+    // Extraer solo el primer bloque de números (ej. "TC1_E2" -> 1)
+    const matchA = a.match(/\d+/);
+    const matchB = b.match(/\d+/);
+    const numA = matchA ? parseInt(matchA[0], 10) : 0;
+    const numB = matchB ? parseInt(matchB[0], 10) : 0;
     
     const isTcA = a.toUpperCase().startsWith("TC");
     const isTcB = b.toUpperCase().startsWith("TC");
@@ -181,32 +183,15 @@ export function sortStageKeys(keys: string[]): string[] {
   });
 }
 
-/**
- * Agrupa las llaves encontradas en el CSV en sus respectivas Etapas.
- * Asume que el orden de las llaves en el CSV corresponde al orden cronológico del JSON.
- */
 export function groupStageKeysByEtapa(stageKeys: string[]): { etapa: string; keys: string[] }[] {
   const sortedKeys = sortStageKeys(stageKeys);
-  const events = getAllEvents().filter(e => e.actividad.startsWith("TC") || e.actividad.toUpperCase().includes("SUPER PRIME") || e.actividad.toUpperCase() === "SP");
+  const events = getAllEvents();
 
   const groups: Record<string, string[]> = {};
   
-  const spEvents = events.filter(e => !e.actividad.startsWith("TC"));
-  const tcEvents = events.filter(e => e.actividad.startsWith("TC"));
-  
-  let tcIndex = 0;
-
   for (const key of sortedKeys) {
-    const isSP = key.toUpperCase().includes("SP") || key.toUpperCase().includes("SUPER PRIME");
-    let etapaName = "EXTRA";
-    
-    if (isSP) {
-      etapaName = spEvents[0] ? spEvents[0].etapa : "SUPER PRIME";
-    } else {
-      const event = tcEvents[tcIndex];
-      etapaName = event ? event.etapa : "EXTRA";
-      tcIndex++;
-    }
+    const event = getEventForStageKey(key);
+    const etapaName = event ? event.etapa : "EXTRA";
     
     if (!groups[etapaName]) {
       groups[etapaName] = [];
@@ -230,13 +215,27 @@ export function groupStageKeysByEtapa(stageKeys: string[]): { etapa: string; key
 
 export function getEventForStageKey(stageKey: string): ActiveEvent | null {
   const events = getAllEvents();
-  const tcEvents = events.filter(e => e.actividad.startsWith("TC"));
   
   const isSP = stageKey.toUpperCase().includes("SP") || stageKey.toUpperCase().includes("SUPER PRIME");
   if (isSP) {
     const spEvent = events.find(e => e.actividad.toUpperCase() === "SUPER PRIME" || e.actividad.toUpperCase() === "SP");
     return spEvent || null;
   }
+
+  // Try to find if there is an Etapa marker in the key
+  let targetEtapaNum: number | null = null;
+  const etapaMatch = stageKey.match(/_E(\d+)|_ETAPA\s*(\d+)/i);
+  if (etapaMatch) {
+    targetEtapaNum = parseInt(etapaMatch[1] || etapaMatch[2], 10);
+  }
+
+  const tcEvents = events.filter(e => {
+    if (!e.actividad.startsWith("TC")) return false;
+    if (targetEtapaNum !== null) {
+      return e.etapa.toUpperCase().includes(`ETAPA ${targetEtapaNum}`);
+    }
+    return true;
+  });
 
   // Si es TC, intentamos extraer el número "TC 6" o "TC6"
   const match = stageKey.match(/TC\s*(\d+)/i);
