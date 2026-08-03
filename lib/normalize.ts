@@ -1,5 +1,5 @@
 import Papa from "papaparse";
-import { formatDiffTime, parseTimeToSeconds } from "@/lib/time";
+import { formatDiffTime, parseTimeToSeconds, formatRallyTime, parsePenalty } from "@/lib/time";
 import { groupStageKeysByEtapa } from "@/lib/itineraryHelper";
 
 export interface RallyResult {
@@ -9,6 +9,9 @@ export interface RallyResult {
   vehiculo?: string;
   tiempo: string;
   diferencia: string;
+  penalizacion?: string;
+  penalizacionMs?: number;
+  penalizacionStatus?: 'pending' | 'applied';
 }
 
 export interface ProcessedResults {
@@ -38,6 +41,7 @@ export function normalizeResults(csvText: string): ProcessedResults {
   let colEq = -1;
   let colVeh = -1;
   let colTime = -1;
+  let colPenalty = -1;
   
   const tcColumns: Record<string, number> = {}; 
 
@@ -57,7 +61,7 @@ export function normalizeResults(csvText: string): ProcessedResults {
     if (tcTitleMatch && !isHeader) {
       currentStageId = tcTitleMatch[1].toUpperCase().trim();
       // Reiniciamos los índices porque la nueva tabla podría tener un orden distinto
-      colPos = -1; colNum = -1; colEq = -1; colVeh = -1; colTime = -1;
+      colPos = -1; colNum = -1; colEq = -1; colVeh = -1; colTime = -1; colPenalty = -1;
       continue;
     }
 
@@ -69,6 +73,7 @@ export function normalizeResults(csvText: string): ProcessedResults {
       colEq = row.findIndex(c => ['equipo', 'piloto', 'concursante'].includes(c.toLowerCase().trim()));
       colVeh = row.findIndex(c => ['vehiculo', 'vehículo', 'auto', 'carro', 'coche'].includes(c.toLowerCase().trim()));
       colTime = row.findIndex(c => ['tiempo', 'time', 'total'].includes(c.toLowerCase().trim()));
+      colPenalty = row.findIndex(c => ['penal.', 'penalizacion', 'penalty', 'penal'].includes(c.toLowerCase().trim()));
 
       // Registrar columnas TC si estamos en una tabla general o mixta
       row.forEach((cell, idx) => {
@@ -88,6 +93,7 @@ export function normalizeResults(csvText: string): ProcessedResults {
     const eqStr = row[colEq]?.trim();
     const vehStr = colVeh >= 0 ? row[colVeh]?.trim() : "";
     const timeStr = row[colTime]?.trim();
+    const penalStr = colPenalty >= 0 ? row[colPenalty]?.trim() : "";
 
     const numero = parseInt(numStr, 10);
 
@@ -95,6 +101,7 @@ export function normalizeResults(csvText: string): ProcessedResults {
 
     const posicionParsed = parseInt(posStr, 10);
     const posicion = isNaN(posicionParsed) ? 0 : posicionParsed;
+    const penalMs = parsePenalty(penalStr);
 
     // En la tabla general por columnas, a veces vienen filas sin CLT y/o sin TIEMPO total.
     // No debemos descartarlas si tienen al menos un tiempo en alguna columna TCx.
@@ -116,43 +123,66 @@ export function normalizeResults(csvText: string): ProcessedResults {
     }
 
     if (currentStageId === "general") {
-      // Guardamos la fila "general" solo si trae un tiempo total usable.
-      // Si no lo trae, igual se incorporará en la General calculada vía TCs.
-      if (timeStr && parseTimeToSeconds(timeStr) !== null) {
-        result.general.push({
-          posicion,
-          numero,
-          equipo: eqStr,
-          vehiculo: vehStr || undefined,
-          tiempo: timeStr,
-          diferencia: "" 
-        });
-      }
-
+      let sumStageSeconds = 0;
       // Extraer los tiempos de las columnas TC en la misma fila (Modo Columnas)
       for (const [tc, idx] of Object.entries(tcColumns)) {
         const tcTimeStr = row[idx]?.trim();
-        if (tcTimeStr && parseTimeToSeconds(tcTimeStr) !== null) {
+        const tSecs = parseTimeToSeconds(tcTimeStr);
+        if (tcTimeStr && tSecs !== null) {
+          sumStageSeconds += tSecs;
           if (!result.stages[tc]) result.stages[tc] = [];
           result.stages[tc].push({
             posicion: 0, 
             numero,
             equipo: eqStr,
             vehiculo: vehStr || undefined,
-            tiempo: tcTimeStr,
+            tiempo: formatRallyTime(tSecs),
             diferencia: ""
           });
         }
       }
+
+      // Guardamos la fila "general" solo si trae un tiempo total usable.
+      const officialTimeSecs = parseTimeToSeconds(timeStr);
+      if (timeStr && officialTimeSecs !== null) {
+        let status: 'pending' | 'applied' | undefined = undefined;
+        
+        if (penalMs > 0) {
+          // Check if penalty is applied (with a 1-second tolerance due to rounding)
+          const diffNoPenal = Math.abs(officialTimeSecs - sumStageSeconds);
+          const diffWithPenal = Math.abs(officialTimeSecs - (sumStageSeconds + (penalMs / 1000)));
+          
+          if (diffWithPenal <= 1.0) {
+            status = 'applied';
+          } else if (diffNoPenal <= 1.0) {
+            status = 'pending';
+          } else {
+            status = 'pending'; // Si no cuadra exacto, asumimos pending por seguridad
+          }
+        }
+
+        result.general.push({
+          posicion,
+          numero,
+          equipo: eqStr,
+          vehiculo: vehStr || undefined,
+          tiempo: formatRallyTime(officialTimeSecs),
+          diferencia: "",
+          penalizacion: penalStr || undefined,
+          penalizacionMs: penalMs,
+          penalizacionStatus: status
+        });
+      }
     } else {
       // Modo Tablas Bloques: Estamos en una tabla exclusiva de un TC
+      const blockTimeSecs = parseTimeToSeconds(timeStr);
       if (!result.stages[currentStageId]) result.stages[currentStageId] = [];
       result.stages[currentStageId].push({
         posicion,
         numero,
         equipo: eqStr,
         vehiculo: vehStr || undefined,
-        tiempo: timeStr,
+        tiempo: blockTimeSecs !== null ? formatRallyTime(blockTimeSecs) : timeStr,
         diferencia: ""
       });
     }
@@ -281,24 +311,10 @@ function buildComputedGeneral(stages: Record<string, RallyResult[]>): RallyResul
       numero: d.numero,
       equipo: d.equipo,
       vehiculo: d.vehiculo,
-      tiempo: formatTotalTime(d.total),
+      tiempo: formatRallyTime(d.total),
       diferencia,
     };
   });
-}
-
-function formatTotalTime(totalSeconds: number): string {
-  if (!isFinite(totalSeconds) || totalSeconds < 0) return "-";
-
-  const h = Math.floor(totalSeconds / 3600);
-  const m = Math.floor((totalSeconds % 3600) / 60);
-  const s = (totalSeconds % 60).toFixed(1);
-
-  if (h > 0) {
-    return `${h}:${m.toString().padStart(2, "0")}:${s.padStart(4, "0")}`;
-  }
-
-  return `${m}:${s.padStart(4, "0")}`;
 }
 
 function recalculateDifferences(arr: RallyResult[]) {

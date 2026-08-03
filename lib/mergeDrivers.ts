@@ -19,6 +19,9 @@ export interface EnrichedRallyResult {
   tiempo: string;
   diferencia: string;
   categorySource: CategorySource;
+  penalizacion?: string;
+  penalizacionMs?: number;
+  penalizacionStatus?: 'pending' | 'applied';
 }
 
 export interface EnrichedProcessedResults {
@@ -43,7 +46,10 @@ export function mergeWithDrivers(liveResults: RallyResult[]): EnrichedRallyResul
       vehiculo: resolvedInfo.vehiculo,
       tiempo: result.tiempo,
       diferencia: result.diferencia,
-      categorySource: resolvedInfo.categorySource
+      categorySource: resolvedInfo.categorySource,
+      penalizacion: result.penalizacion,
+      penalizacionMs: result.penalizacionMs,
+      penalizacionStatus: result.penalizacionStatus
     };
   });
 }
