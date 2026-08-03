@@ -137,7 +137,9 @@ export function normalizeResults(csvText: string): ProcessedResults {
             equipo: eqStr,
             vehiculo: vehStr || undefined,
             tiempo: formatRallyTime(tSecs),
-            diferencia: ""
+            diferencia: "",
+            penalizacion: penalStr || undefined,
+            penalizacionMs: penalMs
           });
         }
       }
@@ -183,7 +185,9 @@ export function normalizeResults(csvText: string): ProcessedResults {
         equipo: eqStr,
         vehiculo: vehStr || undefined,
         tiempo: blockTimeSecs !== null ? formatRallyTime(blockTimeSecs) : timeStr,
-        diferencia: ""
+        diferencia: "",
+        penalizacion: penalStr || undefined,
+        penalizacionMs: penalMs
       });
     }
   }
@@ -255,7 +259,15 @@ function buildComputedGeneral(stages: Record<string, RallyResult[]>): RallyResul
   const stageIds = Object.keys(stages);
   if (stageIds.length === 0) return [];
 
-  const byDriver = new Map<number, { numero: number; equipo: string; vehiculo?: string; total: number; completed: number }>();
+  const byDriver = new Map<number, { 
+    numero: number; 
+    equipo: string; 
+    vehiculo?: string; 
+    total: number; 
+    completed: number;
+    penalizacionMs: number;
+    penalizacionStr?: string;
+  }>();
 
   for (const stageId of stageIds) {
     const stageResults = stages[stageId] ?? [];
@@ -271,12 +283,18 @@ function buildComputedGeneral(stages: Record<string, RallyResult[]>): RallyResul
           vehiculo: r.vehiculo,
           total: t,
           completed: 1,
+          penalizacionMs: r.penalizacionMs || 0,
+          penalizacionStr: r.penalizacion
         });
       } else {
         existing.total += t;
         existing.completed += 1;
         if (!existing.equipo) existing.equipo = r.equipo;
         if (!existing.vehiculo && r.vehiculo) existing.vehiculo = r.vehiculo;
+        if (r.penalizacionMs && r.penalizacionMs > existing.penalizacionMs) {
+          existing.penalizacionMs = r.penalizacionMs;
+          existing.penalizacionStr = r.penalizacion;
+        }
       }
     }
   }
@@ -313,6 +331,9 @@ function buildComputedGeneral(stages: Record<string, RallyResult[]>): RallyResul
       vehiculo: d.vehiculo,
       tiempo: formatRallyTime(d.total),
       diferencia,
+      penalizacion: d.penalizacionStr,
+      penalizacionMs: d.penalizacionMs,
+      penalizacionStatus: d.penalizacionMs > 0 ? 'pending' : undefined
     };
   });
 }
