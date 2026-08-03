@@ -9,6 +9,7 @@ import SpectatorGuide from '@/components/home/SpectatorGuide';
 import Marquee from '@/components/home/Marquee';
 import RouteTimeline from '@/components/home/RouteTimeline';
 import TiltCard from '@/components/ui/TiltCard';
+import SafetyBanner from '@/components/home/SafetyBanner';
 import { motion, Variants } from 'framer-motion';
 
 
@@ -35,6 +36,7 @@ export default function LandingPage() {
   return (
     <div className="flex min-h-screen flex-col font-sans antialiased selection:bg-rally-accent/20 overflow-x-hidden w-full bg-rally-bg">
       <Header />
+      <SafetyBanner />
       
       <main className="flex-1 flex flex-col w-full overflow-hidden relative">
         {/* Background Animado de Orbes (Cyberpunk/Premium Vibe) */}
